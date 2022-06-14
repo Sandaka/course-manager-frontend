@@ -1,0 +1,266 @@
+<div>
+    <div class="row">
+        <div class="col-md-1 col-sm-0 login-context-left"></div>
+
+        <div class="col-md-10 col-sm-12 col-xs-12 login-context-right"><br>
+            <mat-card>
+                <mat-card-title>School Registration</mat-card-title>
+                <mat-card-subtitle>Register your school with LearnGenix to get massive learning experience.
+                </mat-card-subtitle>
+                <mat-stepper #stepper>
+                    <mat-step [stepControl]="firstFormGroup" errorMessage="Personal details are required.">
+                        <form [formGroup]="firstFormGroup">
+                            <ng-template matStepLabel>Personal Details</ng-template>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Full Name</mat-label>
+                                        <input matInput placeholder="Last name, First name" formControlName="firstCtrl"
+                                            required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Email</mat-label>
+                                        <input matInput placeholder="Last name, First name" formControlName="firstCtrl"
+                                            required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Address Line 1</mat-label>
+                                        <input matInput placeholder="Last name, First name" formControlName="firstCtrl"
+                                            required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Address Line 2</mat-label>
+                                        <input matInput placeholder="Last name, First name" formControlName="firstCtrl"
+                                            required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-2">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>City</mat-label>
+                                        <input matInput placeholder="Last name, First name" formControlName="firstCtrl"
+                                            required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-2">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Postal Code</mat-label>
+                                        <input matInput placeholder="Last name, First name" formControlName="firstCtrl"
+                                            required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>NIC/Passport</mat-label>
+                                        <input matInput placeholder="Last name, First name" formControlName="firstCtrl"
+                                            required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Nationality</mat-label>
+                                        <input matInput placeholder="Last name, First name" formControlName="firstCtrl"
+                                            required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div>
+
+                                <button mat-raised-button matStepperNext>Next</button>
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step [stepControl]="secondFormGroup" errorMessage="School is required.">
+                        <form [formGroup]="secondFormGroup">
+                            <ng-template matStepLabel>School/Institution</ng-template>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>School Name</mat-label>
+                                        <input matInput placeholder="Last name, First name" formControlName="firstCtrl"
+                                            required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-3">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Reg. No</mat-label>
+                                        <input matInput placeholder="Last name, First name" formControlName="firstCtrl"
+                                            required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Website/Email</mat-label>
+                                        <input matInput placeholder="Last name, First name" formControlName="firstCtrl"
+                                            required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Telephone 1</mat-label>
+                                        <input matInput placeholder="Last name, First name" formControlName="firstCtrl"
+                                            required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-2">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Telephone 2</mat-label>
+                                        <input matInput placeholder="Last name, First name" formControlName="firstCtrl"
+                                            required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Address Line 1</mat-label>
+                                        <input matInput placeholder="Last name, First name" formControlName="firstCtrl"
+                                            required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Address Line 2</mat-label>
+                                        <input matInput placeholder="Last name, First name" formControlName="firstCtrl"
+                                            required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-2">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>City</mat-label>
+                                        <input matInput placeholder="Last name, First name" formControlName="firstCtrl"
+                                            required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-2">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Postal Code</mat-label>
+                                        <input matInput placeholder="Last name, First name" formControlName="firstCtrl"
+                                            required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Comment</mat-label>
+                                        <textarea matInput></textarea>
+
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div>
+                                <button mat-raised-button matStepperPrevious>Back</button><span></span>
+                                <button mat-raised-button matStepperNext>Next</button>
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step>
+                        <ng-template matStepLabel>Pricing</ng-template>
+                        <div class="row snip1214">
+                            <!-- <div class="plan">
+                              <h3 class="plan-title">
+                                Starter
+                              </h3>
+                              <div class="plan-cost"><span class="plan-price">$19</span><span class="plan-type">/ Monthly</span></div>
+                              <ul class="plan-features">
+                                <li><i class="ion-checkmark"> </i>5GB Linux Web Space</li>
+                                <li><i class="ion-checkmark"> </i>5 MySQL Databases</li>
+                                <li><i class="ion-checkmark"> </i>Unlimited Email</li>
+                                <li><i class="ion-checkmark"> </i>250Gb Monthly Transfer</li>
+                                <li><i class="ion-checkmark"> </i>24/7 Tech Support</li>
+                                <li><i class="ion-checkmark"> </i>Daily Backups</li>
+                              </ul>
+                              <div class="plan-select"><a href="">Select Plan</a></div>
+                            </div> -->
+                            <div class="col-md-4 plan">
+                                <h3 class="plan-title">
+                                    Bronze
+                                </h3>
+                                <div class="plan-cost"><span class="plan-price">$29</span><span class="plan-type">/
+                                        Monthly</span></div>
+                                <ul class="plan-features">
+                                    <li><i class="ion-checkmark"> </i>10GB Linux Web Space</li>
+                                    <li><i class="ion-checkmark"> </i>10 MySQL Databases</li>
+                                    <li><i class="ion-checkmark"> </i>Unlimited Email</li>
+                                    <li><i class="ion-checkmark"> </i>500Gb Monthly Transfer</li>
+                                    <li><i class="ion-checkmark"> </i>24/7 Tech Support</li>
+                                    <li><i class="ion-checkmark"> </i>Daily Backups</li>
+                                </ul>
+                                <div class="plan-select"><a href="">Select Plan</a></div>
+                            </div>
+                            <div class="col-md-4 plan featured">
+                                <h3 class="plan-title">
+                                    Silver
+                                </h3>
+                                <div class="plan-cost"><span class="plan-price">$49</span><span class="plan-type">/
+                                        Monthly</span></div>
+                                <ul class="plan-features">
+                                    <li><i class="ion-checkmark"> </i>25GB Linux Web Space</li>
+                                    <li><i class="ion-checkmark"> </i>25 MySQL Databases</li>
+                                    <li><i class="ion-checkmark"> </i>Unlimited Email</li>
+                                    <li><i class="ion-checkmark"> </i>2000Gb Monthly Transfer</li>
+                                    <li><i class="ion-checkmark"> </i>24/7 Tech Support</li>
+                                    <li><i class="ion-checkmark"> </i>Daily Backups</li>
+                                </ul>
+                                <div class="plan-select"><a href="">Select Plan</a></div>
+                            </div>
+                            <div class="col-md-4 plan">
+                                <h3 class="plan-title">
+                                    Gold
+                                </h3>
+                                <div class="plan-cost"><span class="plan-price">$99</span><span class="plan-type">/
+                                        Monthly</span></div>
+                                <ul class="plan-features">
+                                    <li><i class="ion-checkmark"> </i>100GB Linux Web Space</li>
+                                    <li><i class="ion-checkmark"> </i>Unlimited MySQL Databases</li>
+                                    <li><i class="ion-checkmark"> </i>Unlimited Email</li>
+                                    <li><i class="ion-checkmark"> </i>10000Gb Monthly Transfer</li>
+                                    <li><i class="ion-checkmark"> </i>24/7 Tech Support</li>
+                                    <li><i class="ion-checkmark"> </i>Daily Backups</li>
+                                </ul>
+                                <div class="plan-select"><a href="">Select Plan</a></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <button mat-raised-button matStepperPrevious>Back</button>
+                            <button mat-raised-button (click)="stepper.reset()">Reset</button>
+                        </div>
+                        
+
+                    </mat-step>
+                </mat-stepper>
+            </mat-card>
+        </div>
+        <!-- <div class="col-md-1">
+
+        </div> -->
+    </div>
+</div>

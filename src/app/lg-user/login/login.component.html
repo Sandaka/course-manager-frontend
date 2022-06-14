@@ -1,0 +1,53 @@
+<div style="width: 100%;overflow: hidden;">
+    <div class="row">
+        <div class="col-md-7 login-context-left">
+            <!-- <img src="../../../assets/ec-lms.png" style="width: 600px;height: 400px"> -->
+
+        </div>
+
+        <div class="col-md-4 login-context-right">
+            <mat-card>
+                <mat-card-content>
+
+                    <!-- <mat-toolbar class="login-toolbar" color="primary"><span style="text-align: center;font-style:calibri">Welcome!</span> <br>Sign in to your account.</mat-toolbar> -->
+                    <div class="row" style="background-color: #049179; color: white; padding: 16px; border-radius: 1%;">
+                        <div class="col-md-12">
+                            <span class="welcome-text">Welcome!</span> <br>Sign in to your account.
+                        </div>
+                    </div>
+                    <br>
+                    <form class="form-group">
+
+                        <mat-form-field>
+                            <mat-icon matPrefix>person_outline</mat-icon>
+                            <input autofocus type="text" matInput placeholder="Username *" [(ngModel)]="username"
+                                name="username">
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-icon matPrefix>lock_outline</mat-icon>
+                            <input type="password" name="password" autocomplete="false" matInput
+                                placeholder="Password *" [(ngModel)]="password">
+                        </mat-form-field>
+
+                        <div>
+                            <button mat-raised-button class="submit-btn" (click)="systemLogin()">Login</button>
+                        </div>
+                    </form>
+                </mat-card-content>
+            </mat-card>
+            <hr>
+            <div style="margin-top: 10px;">
+                <mat-hint>
+                    <h5>Forgot Password? <a href="#"> Reset</a></h5>
+                </mat-hint>
+                <mat-hint>
+                    <h5>Don't have account? Please <a routerLink="/lg/registration">Sign Up</a> for free</h5>
+                </mat-hint>
+            </div>
+        </div>
+        <!-- <div class="col-md-1">
+
+        </div> -->
+    </div>
+</div>
