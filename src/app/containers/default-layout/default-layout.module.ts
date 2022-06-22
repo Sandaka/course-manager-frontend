@@ -25,13 +25,22 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { LearngenixModule } from 'src/app/learngenix/learngenix.module';
 import { LgCourseProviderModule } from 'src/app/lg-course-provider/lg-course-provider.module';
+import { StudentForumComponent } from 'src/app/lg-forum/student-forum/student-forum.component';
+import { LgForumModule } from 'src/app/lg-forum/lg-forum.module';
+import { LgsaBarComponent } from 'src/app/sidebars/super-admin/lgsa-bar/lgsa-bar.component';
+import { CpabBarComponent } from 'src/app/sidebars/bronze/cpab-bar/cpab-bar.component';
+import { CpubBarComponent } from 'src/app/sidebars/bronze/cpub-bar/cpub-bar.component';
+import { StubBarComponent } from 'src/app/sidebars/bronze/stub-bar/stub-bar.component';
 
 
 
 @NgModule({
   declarations: [
     DefaultLayoutComponent,
-
+    LgsaBarComponent,
+    CpabBarComponent,
+    CpubBarComponent,
+    StubBarComponent
   ],
   imports: [
     CommonModule,
@@ -39,6 +48,7 @@ import { LgCourseProviderModule } from 'src/app/lg-course-provider/lg-course-pro
     FormsModule,
     LearngenixModule,
     LgCourseProviderModule,
+    LgForumModule,
     MatToolbarModule,
     MatSidenavModule,
     MatButtonModule,

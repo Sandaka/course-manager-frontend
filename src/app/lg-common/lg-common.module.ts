@@ -11,28 +11,60 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {MatStepperModule} from '@angular/material/stepper';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS, MAT_SNACK_BAR_DEFAULT_OPTIONS_FACTORY } from '@angular/material/snack-bar';
+import { MatTableModule } from '@angular/material/table';
+import { MatSelectModule } from '@angular/material/select';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { RouterModule } from '@angular/router';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { ChartsModule } from 'ng2-charts';
+import { MatRadioModule } from '@angular/material/radio';
+import { StudentSelfRegistrationComponent } from './student-self-registration/student-self-registration.component';
+
 
 
 
 @NgModule({
   declarations: [
-    SchoolRegistrationComponent
+    SchoolRegistrationComponent,
+    StudentSelfRegistrationComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    RouterModule,
+    FormsModule,
+    MatExpansionModule,
+    MatListModule,
     MatCardModule,
-    MatProgressBarModule,
-    MatDividerModule,
+    MatInputModule,
     MatFormFieldModule,
     MatIconModule,
-    MatInputModule,
-    MatListModule,
-    MatToolbarModule,
     MatButtonModule,
-    MatStepperModule
+    MatSnackBarModule,
+    MatTableModule,
+    MatSelectModule,
+    MatPaginatorModule,
+    MatDatepickerModule,
+    MatSortModule,
+    MatNativeDateModule,
+    MatCheckboxModule,
+    NgxMatSelectSearchModule,
+    MatToolbarModule,
+    MatProgressBarModule,
+    MatTooltipModule,
+    MatStepperModule,
+    ChartsModule,
+    MatRadioModule
   ]
 })
 export class LgCommonModule { }

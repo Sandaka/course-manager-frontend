@@ -6,6 +6,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { delay, filter } from 'rxjs/operators';
 import { CourseProviderDashboardComponent } from 'src/app/lg-course-provider/course-provider-dashboard/course-provider-dashboard.component';
 
+@UntilDestroy()
 @Component({
   selector: 'app-default-layout',
   templateUrl: './default-layout.component.html',
@@ -16,7 +17,7 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
 
-  privilege: string = "CPB"
+  privilege: string = "LGSA"
 
   constructor(private observer: BreakpointObserver, private router: Router) { }
 

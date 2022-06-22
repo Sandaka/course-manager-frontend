@@ -1,0 +1,45 @@
+.mat-tab-label,
+.mat-tab-link {
+    color: rgba(8, 167, 119, 0.87);
+}
+
+.example-card {
+    max-width: 100%;
+    margin-top: 15px;
+}
+
+.example-header-image {
+    background-image: url("https://material.angular.io/assets/img/examples/shiba1.jpg");
+    background-size: cover;
+}
+
+.badge {
+    margin-right: 2px;
+}
+.voting {
+    // width: 120px;
+    // font-size: 2em;
+    color: #606060;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+.arrow-icon{
+    font-size: 3em;
+}
+
+.question-btns{
+    font-size: smaller;
+    color: #606060;
+    margin-right: 10px;
+    //margin-top: 20px;
+    font-weight: 400;
+}
+
+.answer-btns{
+    font-size: smaller;
+    color: #ffffff;
+    //margin-top: 20px;
+    font-weight: 400;
+    background-color: #039d74;
+}

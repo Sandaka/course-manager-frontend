@@ -1,0 +1,578 @@
+<div>
+    <div class="row">
+        <div class="col-md-1 col-sm-0 login-context-left"></div>
+
+        <div class="col-md-10 col-sm-12 col-xs-12 login-context-right"><br>
+
+            <mat-card>
+                <mat-card-title>Student Self Registration</mat-card-title>
+                <mat-card-subtitle>Register for the course you are looking for.
+                </mat-card-subtitle>
+                <mat-stepper orientation="vertical">
+                    <mat-step>
+                        <ng-template matStepLabel>Course Selection</ng-template>
+                        <ng-template matStepContent>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Course</mat-label>
+                                        <mat-select [formControl]="pokemonControl">
+                                            <mat-option>-- None --</mat-option>
+                                            <mat-optgroup *ngFor="let group of pokemonGroups" [label]="group.name"
+                                                [disabled]="group.disabled">
+                                                <mat-option *ngFor="let pokemon of group.pokemon"
+                                                    [value]="pokemon.value">
+                                                    {{pokemon.viewValue}}
+                                                </mat-option>
+                                            </mat-optgroup>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-3">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Branch</mat-label>
+                                        <mat-select [formControl]="toppings" multiple>
+                                            <mat-option *ngFor="let topping of toppingList" [value]="topping">
+                                                {{topping}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-3">
+                                    <button class="search-btn" mat-raised-button color="primary">Show Details</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+                                        <!--- Note that these columns can be defined in any order.
+                                              The actual rendered columns are set as a property on the row definition" -->
+
+
+
+                                        <!-- Name Column -->
+                                        <ng-container matColumnDef="course_name">
+                                            <th mat-header-cell *matHeaderCellDef> Course </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.course_name}} </td>
+                                        </ng-container>
+
+                                        <!-- Weight Column -->
+                                        <ng-container matColumnDef="start_date">
+                                            <th mat-header-cell *matHeaderCellDef> Start Date </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.start_date}} </td>
+                                        </ng-container>
+
+                                        <!-- Symbol Column -->
+                                        <ng-container matColumnDef="end_date">
+                                            <th mat-header-cell *matHeaderCellDef> End date </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.end_date}} </td>
+                                        </ng-container>
+
+                                        <!-- Symbol Column -->
+                                        <ng-container matColumnDef="duration">
+                                            <th mat-header-cell *matHeaderCellDef> Duration </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.duration}} </td>
+                                        </ng-container>
+
+                                        <!-- Position Column -->
+                                        <ng-container matColumnDef="mode">
+                                            <th mat-header-cell *matHeaderCellDef> Mode </th>
+                                            <td mat-cell *matCellDef="let element"
+                                                style="background-color: rgb(201, 251, 234);"> {{element.mode}} </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="schedule">
+                                            <th mat-header-cell *matHeaderCellDef> Schedule </th>
+                                            <td mat-cell *matCellDef="let element"
+                                                style="background-color: rgb(185, 232, 248);"> {{element.schedule}}
+                                            </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="payment_plan">
+                                            <th mat-header-cell *matHeaderCellDef> Payment Plan </th>
+                                            <td mat-cell *matCellDef="let element"
+                                                style="background-color: rgb(250, 219, 183);"> {{element.payment_plan}}
+                                            </td>
+                                        </ng-container>
+
+                                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                    </table>
+
+
+                                </div>
+
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-3"
+                                    style="text-transform: uppercase; color: rgb(78, 77, 77); letter-spacing: 1px;">
+                                    <h3>Course Fees</h3>
+
+                                    <p>Esoft fee: LKR 210,000.00</p>
+                                    <p>University fee: LKR 210,000.00</p>
+                                    <p><b>Total: LKR 420,000.00</b></p>
+                                </div>
+                                <div class="col-md-3"
+                                    style="text-transform: uppercase; color: rgb(78, 77, 77); letter-spacing: 1px;">
+                                    <h5>Full time plan</h5>
+                                    <table class="fee-table">
+                                        <tr>
+                                            <th>Year</th>
+                                            <th>Installment</th>
+                                            <th>Due date</th>
+                                        </tr>
+                                        <tr *ngFor="let item of dataExt">
+                                            <td [attr.rowspan]="item.stateSpan" *ngIf="item.stateSpan">{{ item.state }}
+                                            </td>
+                                            <td [attr.rowspan]="item.countySpan" *ngIf="item.countySpan">{{ item.county
+                                                }}</td>
+                                            <td>{{ item.item }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col-md-3"
+                                    style="text-transform: uppercase; color: rgb(78, 77, 77); letter-spacing: 1px;">
+                                    <h5>Part time plan</h5>
+                                    <table class="fee-table">
+                                        <tr>
+                                            <th>Year</th>
+                                            <th>Installment</th>
+                                            <th>Due date</th>
+                                        </tr>
+                                        <tr *ngFor="let item of dataExt">
+                                            <td [attr.rowspan]="item.stateSpan" *ngIf="item.stateSpan">{{ item.state }}
+                                            </td>
+                                            <td [attr.rowspan]="item.countySpan" *ngIf="item.countySpan">{{ item.county
+                                                }}</td>
+                                            <td>{{ item.item }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label id="example-radio-group-label">Course Mode</label>
+                                            <mat-radio-group aria-labelledby="example-radio-group-label"
+                                                class="example-radio-group">
+                                                <mat-radio-button class="example-radio-button"
+                                                    *ngFor="let courseMode of courseModes" [value]="courseMode">
+                                                    {{courseMode}}
+                                                </mat-radio-button>
+                                            </mat-radio-group>
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label id="example-radio-group-label">Payment Mode</label>
+                                            <mat-radio-group aria-labelledby="example-radio-group-label"
+                                                class="example-radio-group">
+                                                <mat-radio-button class="example-radio-button"
+                                                    *ngFor="let paymentMode of paymentModes" [value]="paymentMode">
+                                                    {{paymentMode}}
+                                                </mat-radio-button>
+                                            </mat-radio-group>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button mat-raised-button matStepperNext>Next</button>
+                        </ng-template>
+                    </mat-step>
+
+                    <form [formGroup]="createResumeParentForm" novalidate>
+                        <mat-step>
+                            <ng-template matStepLabel>Personal Info</ng-template>
+                            <ng-template matStepContent>
+
+                                <!-- PERSONAL DETAIL -->
+
+                                <!-- <mat-card class="example-card"> -->
+                                <!-- <mat-card-title>Personal Details</mat-card-title> -->
+                                <mat-card-subtitle>Enter your personal details for course registration.
+                                </mat-card-subtitle>
+                                <mat-card-content>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <mat-form-field appearance="fill">
+                                                <mat-label>Full Name</mat-label>
+                                                <input matInput formControlName="fullName" aria-label="enter full name">
+                                                <mat-error
+                                                    *ngIf="createResumeParentForm.controls['fullName'].errors && createResumeParentForm.controls['fullName'].hasError('required')">
+                                                    Please Enter Full Name
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-12">
+                                            <mat-form-field class="example-full-width" appearance="fill">
+                                                <mat-label>Date of Birth</mat-label>
+                                                <input matInput [matDatepicker]="picker" formControlName="dateOfBirth"
+                                                    aria-label="enter date of birth">
+                                                <mat-hint>MM/DD/YYYY</mat-hint>
+                                                <mat-datepicker-toggle matSuffix [for]="picker">
+                                                    <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #picker></mat-datepicker>
+                                                <mat-error
+                                                    *ngIf="createResumeParentForm.controls['dateOfBirth'].errors && createResumeParentForm.controls['dateOfBirth'].hasError('required')">
+                                                    Please Enter DOB
+                                                </mat-error>
+                                            </mat-form-field>
+
+                                        </div>
+                                        <div class="col-md-3 col-sm-12">
+                                            <mat-form-field appearance="fill">
+                                                <mat-label>Email</mat-label>
+                                                <input matInput formControlName="emailAddress"
+                                                    aria-label="enter email address">
+                                                <mat-error
+                                                    *ngIf="createResumeParentForm.controls['emailAddress'].errors && createResumeParentForm.controls['emailAddress'].hasError('required')">
+                                                    Please Enter Email
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-12">
+                                            <mat-form-field appearance="fill">
+                                                <mat-label>Telephone</mat-label>
+                                                <input matInput type="tel" formControlName="phone"
+                                                    aria-label="enter telephone number">
+                                                <mat-error
+                                                    *ngIf="createResumeParentForm.controls['phone'].errors && createResumeParentForm.controls['phone'].hasError('required')">
+                                                    Please Enter Phone
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <mat-form-field appearance="fill">
+                                                <mat-label>Gender</mat-label>
+                                                <mat-select disableRipple formControlName="gender"
+                                                    aria-label="select gender">
+                                                    <mat-option value="Male">Male</mat-option>
+                                                    <mat-option value="Female">Female</mat-option>
+                                                    <mat-option value="Other">Other</mat-option>
+                                                </mat-select>
+                                                <mat-error
+                                                    *ngIf="createResumeParentForm.controls['gender'].errors && createResumeParentForm.controls['gender'].hasError('required')">
+                                                    Please Enter Gender
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <mat-form-field appearance="fill">
+                                                <mat-label>Address</mat-label>
+                                                <textarea matInput formControlName="address"
+                                                    aria-label="enter address"></textarea>
+                                                <mat-error
+                                                    *ngIf="createResumeParentForm.controls['address'].errors && createResumeParentForm.controls['address'].hasError('required')">
+                                                    Please Enter Address
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <mat-form-field appearance="fill">
+                                                <mat-label>Nationality</mat-label>
+                                                <mat-select disableRipple formControlName="nationality"
+                                                    aria-label="select nationality">
+                                                    <mat-option value="Sri Lankan">Sri Lankan</mat-option>
+                                                    <mat-option value="UK">UK</mat-option>
+                                                    <mat-option value="Indian">Indian</mat-option>
+                                                </mat-select>
+                                                <mat-error
+                                                    *ngIf="createResumeParentForm.controls['nationality'].errors && createResumeParentForm.controls['nationality'].hasError('required')">
+                                                    Please Enter Nationality
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <mat-form-field appearance="fill">
+                                                <mat-label>Civil Status</mat-label>
+                                                <mat-select disableRipple formControlName="civilStatus"
+                                                    aria-label="select civil status">
+                                                    <mat-option value="Married">Married</mat-option>
+                                                    <mat-option value="Unmarried">Unmarried</mat-option>
+                                                    <mat-option value="Divorced">Divorced</mat-option>
+                                                </mat-select>
+                                                <mat-error
+                                                    *ngIf="createResumeParentForm.controls['civilStatus'].errors && createResumeParentForm.controls['civilStatus'].hasError('required')">
+                                                    Please Enter Civil Status
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <mat-form-field appearance="fill">
+                                                <mat-label>LinkedIn Profile</mat-label>
+                                                <input matInput formControlName="linkedInUrl"
+                                                    aria-label="enter social profile link">
+                                                <mat-error
+                                                    *ngIf="createResumeParentForm.controls['linkedInUrl'].errors && createResumeParentForm.controls['linkedInUrl'].hasError('required')">
+                                                    Please Enter Social Profile
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <mat-form-field appearance="fill">
+                                                <mat-label>Description</mat-label>
+                                                <textarea matInput formControlName="description"
+                                                    aria-label="enter description"></textarea>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="row">
+                                        <div class="col-md-4">
+                                            <div *ngFor="let progressInfo of progressInfos">
+                                                <span>{{ progressInfo.fileName }}</span>
+                                                <mat-toolbar class="progress-bar">
+                                                    <mat-progress-bar color="accent" [value]="progressInfo.value">
+                                                    </mat-progress-bar>
+                                                    <span class="progress">{{ progressInfo.value }}%</span>
+                                                </mat-toolbar>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-9">
+                                                    <div>
+                                                        <input type="file" class="form-control-file"
+                                                            (change)="fileChanged($event)"
+                                                            aria-describedby="fileHelpId">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <img *ngFor='let preview of previews' [src]="preview"
+                                                        class="preview">
+                                                </div>
+                                            </div>
+                                            <div *ngIf="message.length" class="message">
+                                                <ul *ngFor="let msg of message; let i = index">
+                                                    <li>{{ msg }}</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div> -->
+
+                                </mat-card-content>
+                                <!-- </mat-card> -->
+
+                                <button mat-raised-button matStepperPrevious>Back</button>
+                                <button mat-raised-button matStepperNext>Next</button>
+                            </ng-template>
+                        </mat-step>
+                        <mat-step>
+                            <ng-template matStepLabel>Educational Info</ng-template>
+                            <ng-template matStepContent>
+                                <mat-card-subtitle>Enter your education details to be display on resume.
+                                </mat-card-subtitle>
+                                <mat-card-content>
+
+                                    <div formArrayName="educationalQualificationList">
+                                        <div *ngFor="let education of educationalQualificationList.controls; let eduIndex=index"
+                                            style="margin-top: 20px;">
+                                            <h4><b>Education Detail {{eduIndex+1}}</b></h4>
+                                            <div [formGroupName]="eduIndex">
+                                                <div class="row">
+                                                    <div class="col-md-2">
+                                                        <mat-form-field appearance="fill">
+                                                            <mat-label>Education Level</mat-label>
+                                                            <mat-select disableRipple
+                                                                id="{{ 'educationalLevel' + eduIndex }}"
+                                                                formControlName="educationalLevel"
+                                                                aria-label="select educational level">
+                                                                <mat-option value="Phd">Phd</mat-option>
+                                                                <mat-option value="Masters">Masters</mat-option>
+                                                                <mat-option value="Bachelors">Bachelors</mat-option>
+                                                                <mat-option value="Bachelors">Diploma</mat-option>
+                                                                <mat-option value="Bachelors">Certification</mat-option>
+                                                                <mat-option value="Bachelors">Primary</mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <mat-form-field class="full-width" appearance="fill">
+                                                            <mat-label>Institution/School</mat-label>
+                                                            <input matInput formControlName="eduInstituteName"
+                                                                aria-label="enter institute name">
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-3 col-sm-12">
+                                                        <mat-form-field color="accent" class="example-full-width"
+                                                            appearance="fill">
+
+                                                            <mat-label>From</mat-label>
+                                                            <input matInput type="number" formControlName="eduFromYear">
+                                                            <!-- <mat-select disableRipple formControlName="eduFromYear">
+                                                                <mat-option value="2017">2017</mat-option>
+                                                                <mat-option value="2018">2018</mat-option>
+                                                                <mat-option value="2019">2019</mat-option>
+                                                                <mat-option value="2020">2020</mat-option>
+                                                            </mat-select> -->
+
+
+                                                            <!-- <mat-label>From</mat-label>
+                                                            <input matInput [matDatepicker]="picker3" formControlName="eduFromYear">
+                                                            <mat-hint>MM/DD/YYYY</mat-hint>
+                                                            <mat-datepicker-toggle matSuffix [for]="picker3">
+                                                            </mat-datepicker-toggle>
+                                                            <mat-datepicker #picker3></mat-datepicker> -->
+                                                        </mat-form-field>
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-12">
+
+                                                        <mat-form-field color="accent" class="example-full-width"
+                                                            appearance="fill">
+
+                                                            <mat-label>To</mat-label>
+                                                            <input matInput type="number" formControlName="eduToYear">
+                                                            <!-- <mat-select disableRipple formControlName="eduToYear">
+                                                                <mat-option value="2017">2017</mat-option>
+                                                                <mat-option value="2018">2018</mat-option>
+                                                                <mat-option value="2019">2019</mat-option>
+                                                                <mat-option value="2020">2020</mat-option>
+                                                            </mat-select> -->
+
+                                                            <!-- <mat-label>To</mat-label>
+                                                            <input matInput [matDatepicker]="picker4" formControlName="eduToDate">
+                                                            <mat-hint>MM/DD/YYYY</mat-hint>
+                                                            <mat-datepicker-toggle matSuffix [for]="picker4">
+                                                            </mat-datepicker-toggle>
+                                                            <mat-datepicker #picker4></mat-datepicker> -->
+
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <mat-form-field class="full-width" appearance="fill">
+                                                            <mat-label>Subject</mat-label>
+                                                            <input matInput formControlName="subject">
+                                                        </mat-form-field>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <mat-form-field class="full-width" appearance="fill">
+                                                            <mat-label>Grade</mat-label>
+                                                            <input matInput formControlName="eduGrade">
+                                                        </mat-form-field>
+                                                    </div>
+                                                    <div class="col-md-2" *ngIf="eduIndex>0">
+                                                        <button mat-mini-fab color="basic"
+                                                            aria-label="Example icon button with a home icon"
+                                                            (click)="removeEducation(eduIndex)">
+                                                            <mat-icon aria-hidden="false"
+                                                                aria-label="Example home icon">
+                                                                remove_circle_outine
+                                                            </mat-icon>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <mat-divider></mat-divider>
+                                        </div>
+                                        <br>
+                                        <div class="col-md-1">
+                                            <button mat-raised-button color="basic" (click)="addEducation()">
+                                                <mat-icon aria-hidden="false" aria-label="Example home icon">
+                                                    add_circle</mat-icon>
+                                                Add
+                                            </button>
+                                        </div>
+                                    </div>
+                                </mat-card-content>
+
+                                <button mat-raised-button matStepperPrevious>Back</button>
+                                <button mat-raised-button matStepperNext>Next</button>
+                            </ng-template>
+                        </mat-step>
+                        <mat-step>
+                            <ng-template matStepLabel>Qualifications</ng-template>
+                            <ng-template matStepContent>
+                                <mat-card-subtitle>Enter your professional qualifications to be display on resume.
+                                </mat-card-subtitle>
+                                <mat-card-content>
+
+                                    <div formArrayName="professionalQualificationList">
+                                        <div *ngFor="let pq of professionalQualificationList.controls; let pqIndex=index"
+                                            style="margin-top: 20px;">
+                                            <h4><b>New Professional Qualification {{pqIndex+1}}</b></h4>
+                                            <div [formGroupName]="pqIndex">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <mat-form-field class="full-width" appearance="fill">
+                                                            <mat-label>Qualification</mat-label>
+                                                            <input matInput formControlName="qualificationName">
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <mat-form-field class="full-width" appearance="fill">
+                                                            <mat-label>Institution/School</mat-label>
+                                                            <input matInput formControlName="pqInstituteName">
+                                                        </mat-form-field>
+                                                    </div>
+
+                                                    <div class="col-md-3">
+                                                        <mat-form-field class="full-width" appearance="fill">
+                                                            <mat-label>Grade</mat-label>
+                                                            <input matInput formControlName="pqGrade">
+                                                        </mat-form-field>
+                                                    </div>
+
+                                                    <div class="col-md-2" *ngIf="pqIndex>0">
+                                                        <button mat-mini-fab color="basic"
+                                                            aria-label="Example icon button with a home icon"
+                                                            (click)="removeQualification(pqIndex)">
+                                                            <mat-icon aria-hidden="false"
+                                                                aria-label="Example home icon">
+                                                                remove_circle_outine
+                                                            </mat-icon>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <mat-divider></mat-divider>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="col-md-1">
+                                        <button mat-raised-button color="basic" (click)="addQualification()">
+                                            <mat-icon aria-hidden="false" aria-label="Example home icon">add_circle
+                                            </mat-icon>
+                                            Add
+                                        </button>
+                                    </div>
+                                </mat-card-content>
+                                <button mat-raised-button matStepperPrevious>Back</button>
+                            </ng-template>
+                        </mat-step>
+                    </form>
+                </mat-stepper>
+
+            </mat-card>
+        </div>
+        <!-- <div class="col-md-1">
+
+        </div> -->
+    </div>
+</div>
