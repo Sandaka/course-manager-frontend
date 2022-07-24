@@ -31,6 +31,7 @@ import { LgsaBarComponent } from 'src/app/sidebars/super-admin/lgsa-bar/lgsa-bar
 import { CpabBarComponent } from 'src/app/sidebars/bronze/cpab-bar/cpab-bar.component';
 import { CpubBarComponent } from 'src/app/sidebars/bronze/cpub-bar/cpub-bar.component';
 import { StubBarComponent } from 'src/app/sidebars/bronze/stub-bar/stub-bar.component';
+import { LgCourseModule } from 'src/app/lg-course/lg-course.module';
 
 
 
@@ -49,6 +50,7 @@ import { StubBarComponent } from 'src/app/sidebars/bronze/stub-bar/stub-bar.comp
     LearngenixModule,
     LgCourseProviderModule,
     LgForumModule,
+    LgCourseModule,
     MatToolbarModule,
     MatSidenavModule,
     MatButtonModule,
