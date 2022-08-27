@@ -9,179 +9,190 @@
                 <mat-card-subtitle>Register for the course you are looking for.
                 </mat-card-subtitle>
                 <mat-stepper orientation="vertical">
-                    <mat-step>
-                        <ng-template matStepLabel>Course Selection</ng-template>
-                        <ng-template matStepContent>
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <mat-form-field appearance="fill">
-                                        <mat-label>Course</mat-label>
-                                        <mat-select [formControl]="pokemonControl">
-                                            <mat-option>-- None --</mat-option>
-                                            <mat-optgroup *ngFor="let group of pokemonGroups" [label]="group.name"
-                                                [disabled]="group.disabled">
-                                                <mat-option *ngFor="let pokemon of group.pokemon"
-                                                    [value]="pokemon.value">
-                                                    {{pokemon.viewValue}}
-                                                </mat-option>
-                                            </mat-optgroup>
-                                        </mat-select>
-                                    </mat-form-field>
+                    <form [formGroup]="tempStudentDetailsForm" novalidate>
+                        <mat-step>
+                            <ng-template matStepLabel>Course Selection</ng-template>
+                            <ng-template matStepContent>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Course</mat-label>
+                                            <mat-select formControlName="courseId">
+                                                <mat-option>-- None --</mat-option>
+                                                <mat-optgroup *ngFor="let group of courseList" [label]="group.name"
+                                                    [disabled]="group.disabled">
+                                                    <mat-option *ngFor="let pokemon of group.pokemon"
+                                                        [value]="pokemon.value">
+                                                        {{pokemon.viewValue}}
+                                                    </mat-option>
+                                                </mat-optgroup>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Branch</mat-label>
+                                            <mat-select formControlName="branchId">
+                                                <mat-option *ngFor="let branch of branchList" [value]="branch.id">
+                                                    {{branch.branchName}}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button class="search-btn" mat-raised-button color="primary"
+                                            (click)="loadCourseDetails()">Show
+                                            Details</button>
+                                    </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <mat-form-field appearance="fill">
-                                        <mat-label>Branch</mat-label>
-                                        <mat-select [formControl]="toppings" multiple>
-                                            <mat-option *ngFor="let topping of toppingList" [value]="topping">
-                                                {{topping}}</mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-md-3">
-                                    <button class="search-btn" mat-raised-button color="primary">Show Details</button>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table mat-table [dataSource]="dataSource_course" class="mat-elevation-z8">
 
-                                        <!--- Note that these columns can be defined in any order.
+                                            <!--- Note that these columns can be defined in any order.
                                               The actual rendered columns are set as a property on the row definition" -->
 
 
 
-                                        <!-- Name Column -->
-                                        <ng-container matColumnDef="course_name">
-                                            <th mat-header-cell *matHeaderCellDef> Course </th>
-                                            <td mat-cell *matCellDef="let element"> {{element.course_name}} </td>
-                                        </ng-container>
+                                            <!-- Name Column -->
+                                            <ng-container matColumnDef="course_name">
+                                                <th mat-header-cell *matHeaderCellDef> Course </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+                                            </ng-container>
 
-                                        <!-- Weight Column -->
-                                        <ng-container matColumnDef="start_date">
-                                            <th mat-header-cell *matHeaderCellDef> Start Date </th>
-                                            <td mat-cell *matCellDef="let element"> {{element.start_date}} </td>
-                                        </ng-container>
+                                            <!-- Weight Column -->
+                                            <ng-container matColumnDef="start_date">
+                                                <th mat-header-cell *matHeaderCellDef> Start Date </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.startDate}} </td>
+                                            </ng-container>
 
-                                        <!-- Symbol Column -->
-                                        <ng-container matColumnDef="end_date">
-                                            <th mat-header-cell *matHeaderCellDef> End date </th>
-                                            <td mat-cell *matCellDef="let element"> {{element.end_date}} </td>
-                                        </ng-container>
+                                            <!-- Symbol Column -->
+                                            <ng-container matColumnDef="end_date">
+                                                <th mat-header-cell *matHeaderCellDef> End date </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.endDate}} </td>
+                                            </ng-container>
 
-                                        <!-- Symbol Column -->
-                                        <ng-container matColumnDef="duration">
-                                            <th mat-header-cell *matHeaderCellDef> Duration </th>
-                                            <td mat-cell *matCellDef="let element"> {{element.duration}} </td>
-                                        </ng-container>
+                                            <!-- Symbol Column -->
+                                            <ng-container matColumnDef="duration">
+                                                <th mat-header-cell *matHeaderCellDef> Duration </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.years}} </td>
+                                            </ng-container>
 
-                                        <!-- Position Column -->
-                                        <ng-container matColumnDef="mode">
-                                            <th mat-header-cell *matHeaderCellDef> Mode </th>
-                                            <td mat-cell *matCellDef="let element"
-                                                style="background-color: rgb(201, 251, 234);"> {{element.mode}} </td>
-                                        </ng-container>
+                                            <!-- Position Column -->
+                                            <ng-container matColumnDef="mode">
+                                                <th mat-header-cell *matHeaderCellDef> Course Type </th>
+                                                <td mat-cell *matCellDef="let element"
+                                                    style="background-color: rgb(201, 251, 234);">
+                                                    {{element.courseTypeName}}
+                                                </td>
+                                            </ng-container>
 
-                                        <ng-container matColumnDef="schedule">
-                                            <th mat-header-cell *matHeaderCellDef> Schedule </th>
-                                            <td mat-cell *matCellDef="let element"
-                                                style="background-color: rgb(185, 232, 248);"> {{element.schedule}}
-                                            </td>
-                                        </ng-container>
+                                            <ng-container matColumnDef="schedule">
+                                                <th mat-header-cell *matHeaderCellDef> Schedule </th>
+                                                <td mat-cell *matCellDef="let element"
+                                                    style="background-color: rgb(185, 232, 248);"> {{element.schedule}}
+                                                </td>
+                                            </ng-container>
 
-                                        <ng-container matColumnDef="payment_plan">
-                                            <th mat-header-cell *matHeaderCellDef> Payment Plan </th>
-                                            <td mat-cell *matCellDef="let element"
-                                                style="background-color: rgb(250, 219, 183);"> {{element.payment_plan}}
-                                            </td>
-                                        </ng-container>
+                                            <ng-container matColumnDef="seats">
+                                                <th mat-header-cell *matHeaderCellDef> Seats</th>
+                                                <td mat-cell *matCellDef="let element"
+                                                    style="background-color: rgb(250, 219, 183);">
+                                                    {{element.seats}}
+                                                </td>
+                                            </ng-container>
 
-                                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                                    </table>
+                                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                        </table>
 
+
+                                    </div>
 
                                 </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-3"
+                                        style="text-transform: uppercase; color: rgb(78, 77, 77); letter-spacing: 1px;">
+                                        <h3>Course Fees</h3>
+                                        <p><b>Total: {{courseFee}}</b></p>
+                                        <p style="color: rgb(5, 112, 64);" *ngIf='offer!=""'>Offer: {{offer}}</p>
+                                    </div>
+                                    <div class="col-md-3"
+                                        style="text-transform: uppercase; color: rgb(78, 77, 77); letter-spacing: 1px;">
+                                        <h5>Full time plan</h5>
+                                        <table class="fee-table">
+                                            <tr>
+                                                <th>Year</th>
+                                                <th>Installment</th>
+                                                <th>Due date</th>
+                                            </tr>
+                                            <tr *ngFor="let fee of feeDetailList">
+                                                <td>{{fee.year}}</td>
+                                                <td>{{fee.cost}}</td>
+                                                <td>{{fee.dueDate}}</td>
+                                                <!-- <td [attr.rowspan]="item.stateSpan" *ngIf="item.stateSpan">{{ item.state
+                                                    }}
+                                                </td>
+                                                <td [attr.rowspan]="item.countySpan" *ngIf="item.countySpan">{{
+                                                    item.county
+                                                    }}</td>
+                                                <td>{{ item.item }}</td> -->
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <!-- <div class="col-md-3"
+                                        style="text-transform: uppercase; color: rgb(78, 77, 77); letter-spacing: 1px;">
+                                        <h5>Part time plan</h5>
+                                        <table class="fee-table">
+                                            <tr>
+                                                <th>Year</th>
+                                                <th>Installment</th>
+                                                <th>Due date</th>
+                                            </tr>
+                                            <tr *ngFor="let item of dataExt">
+                                                <td [attr.rowspan]="item.stateSpan" *ngIf="item.stateSpan">{{ item.state
+                                                    }}
+                                                </td>
+                                                <td [attr.rowspan]="item.countySpan" *ngIf="item.countySpan">{{
+                                                    item.county
+                                                    }}</td>
+                                                <td>{{ item.item }}</td>
+                                            </tr>
+                                        </table>
+                                    </div> -->
+                                    <div class="col-md-3">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label id="example-radio-group-label">Course Mode</label>
+                                                <mat-radio-group aria-labelledby="example-radio-group-label"
+                                                    formControlName="courseTypeId" class="example-radio-group">
+                                                    <mat-radio-button class="example-radio-button"
+                                                        *ngFor="let courseMode of courseModes" [value]="courseMode.id">
+                                                        {{courseMode.courseTypeName}}
+                                                    </mat-radio-button>
+                                                </mat-radio-group>
 
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-md-3"
-                                    style="text-transform: uppercase; color: rgb(78, 77, 77); letter-spacing: 1px;">
-                                    <h3>Course Fees</h3>
+                                            </div>
+                                            <!-- <div class="col-md-6">
+                                                <label id="example-radio-group-label">Payment Mode</label>
+                                                <mat-radio-group aria-labelledby="example-radio-group-label"
+                                                    class="example-radio-group">
+                                                    <mat-radio-button class="example-radio-button"
+                                                        *ngFor="let paymentMode of paymentModes" [value]="paymentMode">
+                                                        {{paymentMode}}
+                                                    </mat-radio-button>
+                                                </mat-radio-group>
 
-                                    <p>Esoft fee: LKR 210,000.00</p>
-                                    <p>University fee: LKR 210,000.00</p>
-                                    <p><b>Total: LKR 420,000.00</b></p>
-                                </div>
-                                <div class="col-md-3"
-                                    style="text-transform: uppercase; color: rgb(78, 77, 77); letter-spacing: 1px;">
-                                    <h5>Full time plan</h5>
-                                    <table class="fee-table">
-                                        <tr>
-                                            <th>Year</th>
-                                            <th>Installment</th>
-                                            <th>Due date</th>
-                                        </tr>
-                                        <tr *ngFor="let item of dataExt">
-                                            <td [attr.rowspan]="item.stateSpan" *ngIf="item.stateSpan">{{ item.state }}
-                                            </td>
-                                            <td [attr.rowspan]="item.countySpan" *ngIf="item.countySpan">{{ item.county
-                                                }}</td>
-                                            <td>{{ item.item }}</td>
-                                        </tr>
-                                    </table>
-                                </div>
-                                <div class="col-md-3"
-                                    style="text-transform: uppercase; color: rgb(78, 77, 77); letter-spacing: 1px;">
-                                    <h5>Part time plan</h5>
-                                    <table class="fee-table">
-                                        <tr>
-                                            <th>Year</th>
-                                            <th>Installment</th>
-                                            <th>Due date</th>
-                                        </tr>
-                                        <tr *ngFor="let item of dataExt">
-                                            <td [attr.rowspan]="item.stateSpan" *ngIf="item.stateSpan">{{ item.state }}
-                                            </td>
-                                            <td [attr.rowspan]="item.countySpan" *ngIf="item.countySpan">{{ item.county
-                                                }}</td>
-                                            <td>{{ item.item }}</td>
-                                        </tr>
-                                    </table>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label id="example-radio-group-label">Course Mode</label>
-                                            <mat-radio-group aria-labelledby="example-radio-group-label"
-                                                class="example-radio-group">
-                                                <mat-radio-button class="example-radio-button"
-                                                    *ngFor="let courseMode of courseModes" [value]="courseMode">
-                                                    {{courseMode}}
-                                                </mat-radio-button>
-                                            </mat-radio-group>
-
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label id="example-radio-group-label">Payment Mode</label>
-                                            <mat-radio-group aria-labelledby="example-radio-group-label"
-                                                class="example-radio-group">
-                                                <mat-radio-button class="example-radio-button"
-                                                    *ngFor="let paymentMode of paymentModes" [value]="paymentMode">
-                                                    {{paymentMode}}
-                                                </mat-radio-button>
-                                            </mat-radio-group>
-
+                                            </div> -->
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <button mat-raised-button matStepperNext>Next</button>
-                        </ng-template>
-                    </mat-step>
+                                <button mat-raised-button matStepperNext>Next</button>
+                            </ng-template>
+                        </mat-step>
 
-                    <form [formGroup]="createResumeParentForm" novalidate>
+
                         <mat-step>
                             <ng-template matStepLabel>Personal Info</ng-template>
                             <ng-template matStepContent>
@@ -199,7 +210,7 @@
                                                 <mat-label>Full Name</mat-label>
                                                 <input matInput formControlName="fullName" aria-label="enter full name">
                                                 <mat-error
-                                                    *ngIf="createResumeParentForm.controls['fullName'].errors && createResumeParentForm.controls['fullName'].hasError('required')">
+                                                    *ngIf="tempStudentDetailsForm.controls['fullName'].errors && tempStudentDetailsForm.controls['fullName'].hasError('required')">
                                                     Please Enter Full Name
                                                 </mat-error>
                                             </mat-form-field>
@@ -210,7 +221,7 @@
                                         <div class="col-md-3 col-sm-12">
                                             <mat-form-field class="example-full-width" appearance="fill">
                                                 <mat-label>Date of Birth</mat-label>
-                                                <input matInput [matDatepicker]="picker" formControlName="dateOfBirth"
+                                                <input matInput [matDatepicker]="picker" formControlName="dob"
                                                     aria-label="enter date of birth">
                                                 <mat-hint>MM/DD/YYYY</mat-hint>
                                                 <mat-datepicker-toggle matSuffix [for]="picker">
@@ -218,7 +229,7 @@
                                                 </mat-datepicker-toggle>
                                                 <mat-datepicker #picker></mat-datepicker>
                                                 <mat-error
-                                                    *ngIf="createResumeParentForm.controls['dateOfBirth'].errors && createResumeParentForm.controls['dateOfBirth'].hasError('required')">
+                                                    *ngIf="tempStudentDetailsForm.controls['dob'].errors && tempStudentDetailsForm.controls['dob'].hasError('required')">
                                                     Please Enter DOB
                                                 </mat-error>
                                             </mat-form-field>
@@ -227,10 +238,10 @@
                                         <div class="col-md-3 col-sm-12">
                                             <mat-form-field appearance="fill">
                                                 <mat-label>Email</mat-label>
-                                                <input matInput formControlName="emailAddress"
+                                                <input matInput formControlName="email"
                                                     aria-label="enter email address">
                                                 <mat-error
-                                                    *ngIf="createResumeParentForm.controls['emailAddress'].errors && createResumeParentForm.controls['emailAddress'].hasError('required')">
+                                                    *ngIf="tempStudentDetailsForm.controls['email'].errors && tempStudentDetailsForm.controls['email'].hasError('required')">
                                                     Please Enter Email
                                                 </mat-error>
                                             </mat-form-field>
@@ -241,14 +252,27 @@
                                         <div class="col-md-3 col-sm-12">
                                             <mat-form-field appearance="fill">
                                                 <mat-label>Telephone</mat-label>
-                                                <input matInput type="tel" formControlName="phone"
+                                                <input matInput type="tel" formControlName="telephone1"
                                                     aria-label="enter telephone number">
                                                 <mat-error
-                                                    *ngIf="createResumeParentForm.controls['phone'].errors && createResumeParentForm.controls['phone'].hasError('required')">
+                                                    *ngIf="tempStudentDetailsForm.controls['telephone1'].errors && tempStudentDetailsForm.controls['telephone1'].hasError('required')">
                                                     Please Enter Phone
                                                 </mat-error>
                                             </mat-form-field>
                                         </div>
+                                        <div class="col-md-3 col-sm-12">
+                                            <mat-form-field appearance="fill">
+                                                <mat-label>Mobile</mat-label>
+                                                <input matInput type="tel" formControlName="telephone2"
+                                                    aria-label="enter telephone number">
+                                                <mat-error
+                                                    *ngIf="tempStudentDetailsForm.controls['telephone2'].errors && tempStudentDetailsForm.controls['telephone2'].hasError('required')">
+                                                    Please Enter Phone
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col-md-3">
                                             <mat-form-field appearance="fill">
                                                 <mat-label>Gender</mat-label>
@@ -259,7 +283,7 @@
                                                     <mat-option value="Other">Other</mat-option>
                                                 </mat-select>
                                                 <mat-error
-                                                    *ngIf="createResumeParentForm.controls['gender'].errors && createResumeParentForm.controls['gender'].hasError('required')">
+                                                    *ngIf="tempStudentDetailsForm.controls['gender'].errors && tempStudentDetailsForm.controls['gender'].hasError('required')">
                                                     Please Enter Gender
                                                 </mat-error>
                                             </mat-form-field>
@@ -268,13 +292,32 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <mat-form-field appearance="fill">
-                                                <mat-label>Address</mat-label>
-                                                <textarea matInput formControlName="address"
-                                                    aria-label="enter address"></textarea>
-                                                <mat-error
-                                                    *ngIf="createResumeParentForm.controls['address'].errors && createResumeParentForm.controls['address'].hasError('required')">
-                                                    Please Enter Address
-                                                </mat-error>
+                                                <mat-label>Address Line 1</mat-label>
+                                                <input matInput placeholder="Last name, First name"
+                                                    formControlName="addressLine1" required>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <mat-form-field appearance="fill">
+                                                <mat-label>Address Line 2</mat-label>
+                                                <input matInput placeholder="Last name, First name"
+                                                    formControlName="addressLine2" required>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <mat-form-field appearance="fill">
+                                                <mat-label>City</mat-label>
+                                                <input matInput placeholder="Last name, First name"
+                                                    formControlName="addressLine3" required>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <mat-form-field appearance="fill">
+                                                <mat-label>Postal Code</mat-label>
+                                                <input matInput placeholder="Last name, First name"
+                                                    formControlName="postalCode" required>
                                             </mat-form-field>
                                         </div>
                                     </div>
@@ -290,7 +333,7 @@
                                                     <mat-option value="Indian">Indian</mat-option>
                                                 </mat-select>
                                                 <mat-error
-                                                    *ngIf="createResumeParentForm.controls['nationality'].errors && createResumeParentForm.controls['nationality'].hasError('required')">
+                                                    *ngIf="tempStudentDetailsForm.controls['nationality'].errors && tempStudentDetailsForm.controls['nationality'].hasError('required')">
                                                     Please Enter Nationality
                                                 </mat-error>
                                             </mat-form-field>
@@ -305,7 +348,7 @@
                                                     <mat-option value="Divorced">Divorced</mat-option>
                                                 </mat-select>
                                                 <mat-error
-                                                    *ngIf="createResumeParentForm.controls['civilStatus'].errors && createResumeParentForm.controls['civilStatus'].hasError('required')">
+                                                    *ngIf="tempStudentDetailsForm.controls['civilStatus'].errors && tempStudentDetailsForm.controls['civilStatus'].hasError('required')">
                                                     Please Enter Civil Status
                                                 </mat-error>
                                             </mat-form-field>
@@ -315,11 +358,11 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <mat-form-field appearance="fill">
-                                                <mat-label>LinkedIn Profile</mat-label>
-                                                <input matInput formControlName="linkedInUrl"
-                                                    aria-label="enter social profile link">
+                                                <mat-label>NIC/Passporr</mat-label>
+                                                <input matInput formControlName="nic"
+                                                    aria-label="enter NIC or Passport">
                                                 <mat-error
-                                                    *ngIf="createResumeParentForm.controls['linkedInUrl'].errors && createResumeParentForm.controls['linkedInUrl'].hasError('required')">
+                                                    *ngIf="tempStudentDetailsForm.controls['nic'].errors && tempStudentDetailsForm.controls['nic'].hasError('required')">
                                                     Please Enter Social Profile
                                                 </mat-error>
                                             </mat-form-field>
@@ -392,22 +435,22 @@
                                                         <mat-form-field appearance="fill">
                                                             <mat-label>Education Level</mat-label>
                                                             <mat-select disableRipple
-                                                                id="{{ 'educationalLevel' + eduIndex }}"
-                                                                formControlName="educationalLevel"
+                                                                id="{{ 'qualificationTypeId' + eduIndex }}"
+                                                                formControlName="qualificationTypeId"
                                                                 aria-label="select educational level">
-                                                                <mat-option value="Phd">Phd</mat-option>
-                                                                <mat-option value="Masters">Masters</mat-option>
-                                                                <mat-option value="Bachelors">Bachelors</mat-option>
-                                                                <mat-option value="Bachelors">Diploma</mat-option>
-                                                                <mat-option value="Bachelors">Certification</mat-option>
-                                                                <mat-option value="Bachelors">Primary</mat-option>
+                                                                <mat-option value="1">Phd</mat-option>
+                                                                <mat-option value="2">Masters</mat-option>
+                                                                <mat-option value="3">Bachelors</mat-option>
+                                                                <mat-option value="4">Diploma</mat-option>
+                                                                <mat-option value="5">Certification</mat-option>
+                                                                <mat-option value="6">Primary</mat-option>
                                                             </mat-select>
                                                         </mat-form-field>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <mat-form-field class="full-width" appearance="fill">
                                                             <mat-label>Institution/School</mat-label>
-                                                            <input matInput formControlName="eduInstituteName"
+                                                            <input matInput formControlName="school"
                                                                 aria-label="enter institute name">
                                                         </mat-form-field>
                                                     </div>
@@ -415,48 +458,30 @@
 
                                                 <div class="row">
                                                     <div class="col-md-3 col-sm-12">
-                                                        <mat-form-field color="accent" class="example-full-width"
-                                                            appearance="fill">
-
-                                                            <mat-label>From</mat-label>
-                                                            <input matInput type="number" formControlName="eduFromYear">
-                                                            <!-- <mat-select disableRipple formControlName="eduFromYear">
-                                                                <mat-option value="2017">2017</mat-option>
-                                                                <mat-option value="2018">2018</mat-option>
-                                                                <mat-option value="2019">2019</mat-option>
-                                                                <mat-option value="2020">2020</mat-option>
-                                                            </mat-select> -->
-
-
-                                                            <!-- <mat-label>From</mat-label>
-                                                            <input matInput [matDatepicker]="picker3" formControlName="eduFromYear">
+                                                        <mat-form-field class="example-full-width" appearance="fill">
+                                                            <mat-label>Start date</mat-label>
+                                                            <input matInput [matDatepicker]="picker_sd"
+                                                                formControlName="startDate">
                                                             <mat-hint>MM/DD/YYYY</mat-hint>
-                                                            <mat-datepicker-toggle matSuffix [for]="picker3">
+                                                            <mat-datepicker-toggle matSuffix [for]="picker_sd">
+                                                                <mat-icon matDatepickerToggleIcon>keyboard_arrow_down
+                                                                </mat-icon>
                                                             </mat-datepicker-toggle>
-                                                            <mat-datepicker #picker3></mat-datepicker> -->
+                                                            <mat-datepicker #picker_sd></mat-datepicker>
                                                         </mat-form-field>
                                                     </div>
                                                     <div class="col-md-3 col-sm-12">
 
-                                                        <mat-form-field color="accent" class="example-full-width"
-                                                            appearance="fill">
-
-                                                            <mat-label>To</mat-label>
-                                                            <input matInput type="number" formControlName="eduToYear">
-                                                            <!-- <mat-select disableRipple formControlName="eduToYear">
-                                                                <mat-option value="2017">2017</mat-option>
-                                                                <mat-option value="2018">2018</mat-option>
-                                                                <mat-option value="2019">2019</mat-option>
-                                                                <mat-option value="2020">2020</mat-option>
-                                                            </mat-select> -->
-
-                                                            <!-- <mat-label>To</mat-label>
-                                                            <input matInput [matDatepicker]="picker4" formControlName="eduToDate">
+                                                        <mat-form-field class="example-full-width" appearance="fill">
+                                                            <mat-label>Effective date</mat-label>
+                                                            <input matInput [matDatepicker]="picker_ed"
+                                                                formControlName="effectiveDate">
                                                             <mat-hint>MM/DD/YYYY</mat-hint>
-                                                            <mat-datepicker-toggle matSuffix [for]="picker4">
+                                                            <mat-datepicker-toggle matSuffix [for]="picker_ed">
+                                                                <mat-icon matDatepickerToggleIcon>keyboard_arrow_down
+                                                                </mat-icon>
                                                             </mat-datepicker-toggle>
-                                                            <mat-datepicker #picker4></mat-datepicker> -->
-
+                                                            <mat-datepicker #picker_ed></mat-datepicker>
                                                         </mat-form-field>
                                                     </div>
                                                 </div>
@@ -464,14 +489,14 @@
                                                 <div class="row">
                                                     <div class="col-md-3">
                                                         <mat-form-field class="full-width" appearance="fill">
-                                                            <mat-label>Subject</mat-label>
-                                                            <input matInput formControlName="subject">
+                                                            <mat-label>Qualification Name</mat-label>
+                                                            <input matInput formControlName="qualificationName">
                                                         </mat-form-field>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <mat-form-field class="full-width" appearance="fill">
                                                             <mat-label>Grade</mat-label>
-                                                            <input matInput formControlName="eduGrade">
+                                                            <input matInput formControlName="overallGrade">
                                                         </mat-form-field>
                                                     </div>
                                                     <div class="col-md-2" *ngIf="eduIndex>0">
@@ -499,11 +524,13 @@
                                     </div>
                                 </mat-card-content>
 
-                                <button mat-raised-button matStepperPrevious>Back</button>
-                                <button mat-raised-button matStepperNext>Next</button>
+                                <button mat-raised-button matStepperPrevious>Back</button><span style="color: white;"> |
+                                </span>
+                                <button mat-raised-button color="primary"
+                                    (click)="submitStudent(tempStudentDetailsForm.value)">Submit Form</button>
                             </ng-template>
                         </mat-step>
-                        <mat-step>
+                        <!-- <mat-step>
                             <ng-template matStepLabel>Qualifications</ng-template>
                             <ng-template matStepContent>
                                 <mat-card-subtitle>Enter your professional qualifications to be display on resume.
@@ -565,14 +592,15 @@
                                 </mat-card-content>
                                 <button mat-raised-button matStepperPrevious>Back</button>
                             </ng-template>
-                        </mat-step>
+                        </mat-step> -->
                     </form>
                 </mat-stepper>
-
+                <pre>{{tempStudentDetailsForm.value | json}}</pre>
             </mat-card>
         </div>
         <!-- <div class="col-md-1">
 
         </div> -->
+
     </div>
 </div>

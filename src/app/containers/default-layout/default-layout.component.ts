@@ -17,7 +17,7 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
 
-  privilege: string = "LGSA"
+  privilege: string = "CPAB"
 
   constructor(private observer: BreakpointObserver, private router: Router) { }
 

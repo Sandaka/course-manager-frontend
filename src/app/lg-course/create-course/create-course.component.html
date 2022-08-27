@@ -10,29 +10,39 @@
                 <div class="col-md-4">
                     <mat-form-field appearance="fill">
                         <mat-label>Course name</mat-label>
-                        <input matInput>
+                        <input formControlName="courseName" matInput>
                     </mat-form-field>
                 </div>
                 <div class="col-md-2">
                     <mat-form-field appearance="fill">
                         <mat-label>Years</mat-label>
-                        <mat-select aria-label="select educational level">
-                            <mat-option value="Phd">4 Months</mat-option>
-                            <mat-option value="Masters">6 Months</mat-option>
-                            <mat-option value="Bachelors">1</mat-option>
-                            <mat-option value="Bachelors">2</mat-option>
-                            <mat-option value="Bachelors">3</mat-option>
-                            <mat-option value="Bachelors">4</mat-option>
-                            <mat-option value="Bachelors">5</mat-option>
+                        <mat-select aria-label="select educational level" formControlName="years">
+                            <mat-option value="4 months">4 Months</mat-option>
+                            <mat-option value="6 months">6 Months</mat-option>
+                            <mat-option value="1 year">1</mat-option>
+                            <mat-option value="2 years">2</mat-option>
+                            <mat-option value="3 years">3</mat-option>
+                            <mat-option value="4 years">4</mat-option>
+                            <mat-option value="5 years">5</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
                 <div class="col-md-2">
                     <mat-form-field appearance="fill">
                         <mat-label>Course type</mat-label>
-                        <mat-select aria-label="select course type">
+                        <mat-select aria-label="select course type" formControlName="courseTypeId">
                             <mat-option value="1">Full time</mat-option>
                             <mat-option value="2">Part time</mat-option>
+
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-2">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Edu Level</mat-label>
+                        <mat-select aria-label="select course type" formControlName="eduLevelId">
+                            <mat-option value="1">Bachelors</mat-option>
+                            <mat-option value="2">Masters</mat-option>
 
                         </mat-select>
                     </mat-form-field>
@@ -80,9 +90,9 @@
                 </ng-container>
 
                 <!-- Position Column -->
-                <ng-container matColumnDef="position">
+                <ng-container matColumnDef="id">
                     <th mat-header-cell *matHeaderCellDef> No. </th>
-                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
                 </ng-container>
 
                 <!-- Name Column -->
@@ -109,110 +119,31 @@
             </table>
         </mat-card-content>
     </mat-card><br>
-
-    <!-- <mat-card>
-        <mat-card-subtitle>Course years</mat-card-subtitle>
-        <mat-card-content>
-            <div formArrayName="courseYearsList">
-                <div *ngFor="let education of courseYearsList.controls; let eduIndex=index" style="margin-top: 20px;">
-                    <h4><b>Year {{eduIndex+1}}</b></h4>
-                    <div [formGroupName]="eduIndex">
-                        <div class="row">
-                            <div class="col-md-2">
-                                <mat-form-field appearance="fill">
-                                    <mat-label>Education Level</mat-label>
-                                    <mat-select disableRipple id="{{ 'educationalLevel' + eduIndex }}"
-                                        formControlName="educationalLevel" aria-label="select educational level">
-                                        <mat-option value="Phd">Phd</mat-option>
-                                        <mat-option value="Masters">Masters</mat-option>
-                                        <mat-option value="Bachelors">Bachelors</mat-option>
-                                        <mat-option value="Bachelors">Diploma</mat-option>
-                                        <mat-option value="Bachelors">Certification</mat-option>
-                                        <mat-option value="Bachelors">Primary</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-                            <div class="col-md-4">
-                                <mat-form-field class="full-width" appearance="fill">
-                                    <mat-label>Institution/School</mat-label>
-                                    <input matInput formControlName="eduInstituteName"
-                                        aria-label="enter institute name">
-                                </mat-form-field>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-3 col-sm-12">
-                                <mat-form-field color="accent" class="example-full-width" appearance="fill">
-
-                                    <mat-label>From</mat-label>
-                                    <input matInput type="number" formControlName="eduFromYear">
-
-                                </mat-form-field>
-                            </div>
-                            <div class="col-md-3 col-sm-12">
-
-                                <mat-form-field color="accent" class="example-full-width" appearance="fill">
-
-                                    <mat-label>To</mat-label>
-                                    <input matInput type="number" formControlName="eduToYear">
-                                </mat-form-field>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-3">
-                                <mat-form-field class="full-width" appearance="fill">
-                                    <mat-label>Subject</mat-label>
-                                    <input matInput formControlName="subject">
-                                </mat-form-field>
-                            </div>
-                            <div class="col-md-3">
-                                <mat-form-field class="full-width" appearance="fill">
-                                    <mat-label>Grade</mat-label>
-                                    <input matInput formControlName="eduGrade">
-                                </mat-form-field>
-                            </div>
-                            <div class="col-md-2" *ngIf="eduIndex>0">
-                                <button mat-mini-fab color="basic" aria-label="Example icon button with a home icon"
-                                    (click)="removeEducation(eduIndex)">
-                                    <mat-icon aria-hidden="false" aria-label="Example home icon">
-                                        remove_circle_outine
-                                    </mat-icon>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <mat-divider></mat-divider>
-                </div>
-                <br>
-                <div class="col-md-1">
-                    <button mat-raised-button color="basic" (click)="addEducation()">
-                        <mat-icon aria-hidden="false" aria-label="Example home icon">
-                            add_circle</mat-icon>
-                        Add Year
-                    </button>
-                </div>
-            </div>
-
-        </mat-card-content>
-    </mat-card><br> -->
     <mat-card>
-
         <mat-card-subtitle>Course Information</mat-card-subtitle>
         <mat-card-content>
 
             <div class="row">
                 <div class="col-md-3">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Start Date</mat-label>
-                        <input matInput>
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Start date</mat-label>
+                        <input matInput [matDatepicker]="picker_sd" formControlName="startDate">
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matSuffix [for]="picker_sd">
+                            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #picker_sd></mat-datepicker>
                     </mat-form-field>
                 </div>
                 <div class="col-md-3">
-                    <mat-form-field appearance="fill">
-                        <mat-label>End Date</mat-label>
-                        <input matInput>
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>End date</mat-label>
+                        <input matInput [matDatepicker]="picker_ed" formControlName="endDate">
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matSuffix [for]="picker_ed">
+                            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #picker_ed></mat-datepicker>
                     </mat-form-field>
                 </div>
 
@@ -221,13 +152,13 @@
                 <div class="col-md-3">
                     <mat-form-field appearance="fill">
                         <mat-label>Lecture Dates</mat-label>
-                        <input matInput>
+                        <input matInput formControlName="lectureDate">
                     </mat-form-field>
                 </div>
                 <div class="col-md-3">
                     <mat-form-field appearance="fill">
                         <mat-label>Lecture Time</mat-label>
-                        <input matInput>
+                        <input matInput formControlName="lectureTime">
                     </mat-form-field>
                 </div>
             </div>
@@ -235,16 +166,16 @@
                 <div class="col-md-2">
                     <mat-form-field appearance="fill">
                         <mat-label>Seats</mat-label>
-                        <input matInput>
+                        <input matInput formControlName="seats">
                     </mat-form-field>
                 </div>
                 <div class="col-md-2">
                     <mat-form-field appearance="fill">
                         <mat-label>Medium</mat-label>
-                        <mat-select aria-label="select educational level">
-                            <mat-option value="Phd">English</mat-option>
-                            <mat-option value="Masters">Sinhala</mat-option>
-                            <mat-option value="Bachelors">Chinese</mat-option>
+                        <mat-select aria-label="select educational level" formControlName="medium">
+                            <mat-option value="english">English</mat-option>
+                            <mat-option value="sinhala">Sinhala</mat-option>
+                            <mat-option value="chinese">Chinese</mat-option>
                             <mat-option value="Bachelors">Japanese</mat-option>
                             <mat-option value="Bachelors">Hindi</mat-option>
                             <mat-option value="Bachelors">Korean</mat-option>
@@ -257,8 +188,52 @@
             <div class="row">
                 <div class="col-md-4">
                     <mat-form-field appearance="fill">
+                        <mat-label>Course Fee</mat-label>
+                        <input matInput formControlName="courseFee">
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-5">
+                    <mat-form-field appearance="fill">
                         <mat-label>Description</mat-label>
-                        <textarea matInput></textarea>
+                        <textarea matInput formControlName="description"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card><br>
+
+    <mat-card>
+
+        <mat-card-subtitle>Course Offers</mat-card-subtitle>
+        <mat-card-content>
+            <div class="row">
+                <div class="col-md-3">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Offer</mat-label>
+                        <input matInput formControlName="offer">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Valid until</mat-label>
+                        <input matInput [matDatepicker]="picker_vu" formControlName="validUntil">
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matSuffix [for]="picker_vu">
+                            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #picker_vu></mat-datepicker>
+                    </mat-form-field>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Description</mat-label>
+                        <textarea matInput formControlName="offerDescription"></textarea>
                     </mat-form-field>
                 </div>
             </div>
@@ -278,12 +253,12 @@
                                     <mat-label>Year</mat-label>
                                     <mat-select disableRipple id="{{ 'educationalLevel' + eduIndex }}"
                                         formControlName="year" aria-label="select educational level">
-                                        <mat-option value="Phd">1</mat-option>
-                                        <mat-option value="Masters">2</mat-option>
-                                        <mat-option value="Bachelors">3</mat-option>
-                                        <mat-option value="Bachelors">4</mat-option>
-                                        <mat-option value="Bachelors">Certification</mat-option>
-                                        <mat-option value="Bachelors">Primary</mat-option>
+                                        <mat-option value="1">1</mat-option>
+                                        <mat-option value="2">2</mat-option>
+                                        <mat-option value="3">3</mat-option>
+                                        <mat-option value="4">4</mat-option>
+                                        <mat-option value="5">5</mat-option>
+                                        <mat-option value="6">6</mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>
@@ -296,7 +271,7 @@
 
                             <div class="col-md-2 col-sm-12">
                                 <mat-form-field class="example-full-width" appearance="fill">
-                                    <mat-label>Choose a date</mat-label>
+                                    <mat-label>Due date</mat-label>
                                     <input matInput [matDatepicker]="picker" formControlName="dueDate">
                                     <mat-hint>MM/DD/YYYY</mat-hint>
                                     <mat-datepicker-toggle matSuffix [for]="picker">
@@ -319,16 +294,25 @@
                     <mat-divider></mat-divider>
                 </div>
                 <br>
-                <div class="col-md-1">
-                    <button mat-raised-button color="basic" (click)="addEducation()">
-                        <mat-icon aria-hidden="false" aria-label="Example home icon">
-                            add_circle</mat-icon>
-                        Add Year
-                    </button>
+                <div class="row">
+                    <div class="col-md-2">
+                        <button mat-raised-button color="basic" (click)="addEducation()">
+                            <mat-icon aria-hidden="false" aria-label="Example home icon">
+                                add_circle</mat-icon>
+                            Add Year
+                        </button>
+                    </div>
+                    <!-- <span style="color: white;"> | </span> -->
+                    <div class="col-md-1">
+                        <button mat-raised-button color="primary" (click)="saveCourse(createCourseForm.value)">
+                            <mat-icon aria-hidden="false" aria-label="Example home icon">
+                                save</mat-icon>
+                            Save Course
+                        </button>
+                    </div>
                 </div>
             </div>
         </mat-card-content>
+        <pre>{{createCourseForm.value | json}}</pre>
     </mat-card>
-
 </form>
-<!-- {{this.createCourseForm.value | json}} -->

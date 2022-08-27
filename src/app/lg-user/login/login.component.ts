@@ -18,12 +18,14 @@ export class LoginComponent implements OnInit {
 
   systemLogin() {
     console.log(this.password + "--" + this.username);
-    if (this.username === 'jobseeker') {
+    if (this.username === 'esoft') {
       if (this.password === '1234') {
-        this.router.navigate(["/js/home"]);
+        this.router.navigate(["/cpadmin"]);
       } else {
         console.log("Wrong password!")
       }
+    } else if (this.username === 'sandaka') {
+      this.router.navigate(["/student"]);
     } else {
       console.log("Wrong username!")
     }

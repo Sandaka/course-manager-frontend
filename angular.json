@@ -80,7 +80,8 @@
               "browserTarget": "course-manager-frontend:build:production"
             },
             "development": {
-              "browserTarget": "course-manager-frontend:build:development"
+              "browserTarget": "course-manager-frontend:build:development",
+              "proxyConfig": "src/proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"

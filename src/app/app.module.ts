@@ -34,6 +34,7 @@ import { ChartsModule } from 'ng2-charts';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     AppRoutingModule,
     RouterModule,
     FormsModule,
+    HttpClientModule,
     ReactiveFormsModule,
     RouterModule,
     FormsModule,
