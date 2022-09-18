@@ -5,30 +5,53 @@
         </mat-card-title>
         <mat-card-subtitle>Check and verify the initial payments for the enrollment process.</mat-card-subtitle>
         <mat-card-content>
-            <div class="row">
-                <div class="col-md-3">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Pokemon</mat-label>
-                        <mat-select [formControl]="pokemonControl">
-                            <mat-option>-- None --</mat-option>
-                            <mat-optgroup *ngFor="let group of pokemonGroups" [label]="group.name"
-                                [disabled]="group.disabled">
-                                <mat-option *ngFor="let pokemon of group.pokemon" [value]="pokemon.value">
-                                    {{pokemon.viewValue}}
+            <form [formGroup]="verifyApplicationsForm" novalidate>
+                <div class="row">
+                    <div class="col-md-3">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Course</mat-label>
+                            <mat-select formControlName="courseId">
+                                <mat-option>-- None --</mat-option>
+                                <!-- <mat-optgroup *ngFor="let group of courseList" [label]="group.name"
+                                    [disabled]="group.disabled"> -->
+                                <mat-option *ngFor="let course of courseList" [value]="course.id">
+                                    {{course.title}}
                                 </mat-option>
-                            </mat-optgroup>
-                        </mat-select>
-                    </mat-form-field>
+                                <!-- </mat-optgroup> -->
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Branch</mat-label>
+                            <mat-select formControlName="branchId">
+                                <mat-option *ngFor="let branch of branchList" [value]="branch.id">
+                                    {{branch.branchName}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="search-btn" mat-raised-button color="primary" (click)="loadNewStudents()">Show
+                            Students</button>
+                    </div>
                 </div>
-                <div class="col-md-3">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Toppings</mat-label>
-                        <mat-select [formControl]="toppings" multiple>
-                            <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Select Batch</mat-label>
+                            <mat-select formControlName="batchId">
+                                <mat-option *ngFor="let batch of batchList" [value]="batch.id">
+                                    {{batch.batchName}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-label>Course Offers</mat-label>
+                        <p>{{offerName}}</p>
+                    </div>
                 </div>
-            </div>
+            </form>
             <div class="row">
                 <div class="col-md-3">
                     <h5 style="text-transform: uppercase;">Applications List</h5>
@@ -39,53 +62,83 @@
                     <mat-form-field appearance="standard">
                         <mat-label>Filter</mat-label>
                         <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
-                      </mat-form-field>
-                      
-                      <div class="mat-elevation-z8">
+                    </mat-form-field>
+
+                    <div class="mat-elevation-z8">
                         <table mat-table [dataSource]="dataSource" matSort>
-                      
-                          <!-- ID Column -->
-                          <ng-container matColumnDef="id">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-                            <td mat-cell *matCellDef="let row"> {{row.id}} </td>
-                          </ng-container>
-                      
-                          <!-- Progress Column -->
-                          <ng-container matColumnDef="progress">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Progress </th>
-                            <td mat-cell *matCellDef="let row"> {{row.progress}}% </td>
-                          </ng-container>
-                      
-                          <!-- Name Column -->
-                          <ng-container matColumnDef="name">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-                            <td mat-cell *matCellDef="let row"> {{row.name}} </td>
-                          </ng-container>
-                      
-                          <!-- Fruit Column -->
-                          <ng-container matColumnDef="fruit">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Fruit </th>
-                            <td mat-cell *matCellDef="let row"> {{row.fruit}} </td>
-                          </ng-container>
-                      
-                          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                      
-                          <!-- Row shown when there is no matching data. -->
-                          <tr class="mat-row" *matNoDataRow>
-                            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-                          </tr>
+
+                            <!-- ID Column -->
+                            <ng-container matColumnDef="id">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                                <td mat-cell *matCellDef="let row"> {{row.tempStudentId}} </td>
+                            </ng-container>
+
+                            <!-- Progress Column -->
+                            <ng-container matColumnDef="full_name">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Full name </th>
+                                <td mat-cell *matCellDef="let row"> {{row.fullName}} </td>
+                            </ng-container>
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="email">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+                                <td mat-cell *matCellDef="let row"> {{row.email}} </td>
+                            </ng-container>
+
+                            <!-- Fruit Column -->
+                            <ng-container matColumnDef="telephone">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Telephone </th>
+                                <td mat-cell *matCellDef="let row"> {{row.telephone}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="amount">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Paid amount </th>
+                                <td mat-cell *matCellDef="let row"> {{row.amount}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="status">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+                                <td mat-cell *matCellDef="let row"> <span class="badge badge-success">Success</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="date">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Payment date </th>
+                                <td mat-cell *matCellDef="let row"> {{row.paymentDate}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="verify">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Verify </th>
+                                <td mat-cell *matCellDef="let row"> <button class="verify-btn" mat-raised-button
+                                        (click)="verifyPayment(row)" color="primary">Enroll</button> </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="reject">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Reject </th>
+                                <td mat-cell *matCellDef="let row"> <button class="reject-btn" mat-raised-button
+                                        color="primary">Reject</button> </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                            <!-- Row shown when there is no matching data. -->
+                            <tr class="mat-row" *matNoDataRow>
+                                <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                            </tr>
                         </table>
-                      
-                        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
-                      </div>
-                      
+
+                        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users">
+                        </mat-paginator>
+                    </div>
                 </div>
             </div>
         </mat-card-content>
         <mat-card-actions>
-            <button mat-button>LIKE</button>
-            <button mat-button>SHARE</button>
+            <button style="margin-left: 20px;" mat-raised-button color="primary" matBadge="8" matBadgePosition="before"
+                matBadgeColor="accent" class="search-btn">
+                Enrollments
+            </button>
         </mat-card-actions>
     </mat-card>
 </div>

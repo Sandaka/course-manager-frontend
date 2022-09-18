@@ -1,8 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Course } from 'src/app/models/course';
+import { VerifyStudentApplication } from 'src/app/models/verify-student-application';
+import { CourseService } from 'src/app/services/course.service';
+import { StudentService } from 'src/app/services/student.service';
+import { ViewStudentApplicationComponent } from '../view-student-application/view-student-application.component';
 
 
 interface Pokemon {
@@ -10,18 +16,18 @@ interface Pokemon {
   viewValue: string;
 }
 
-interface PokemonGroup {
-  disabled?: boolean;
-  name: string;
-  pokemon: Pokemon[];
-}
+// interface Course {
+//   disabled?: boolean;
+//   name: string;
+//   pokemon: Pokemon[];
+// }
 
 
 export interface UserData {
   id: string;
-  name: string;
-  progress: string;
-  fruit: string;
+  full_name: string;
+  email: string;
+  telephone: string;
 }
 
 /** Constants used to fill up our data base. */
@@ -64,21 +70,56 @@ const NAMES: string[] = [
 })
 export class VerifyApplicationComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'name', 'progress', 'fruit'];
-  dataSource: MatTableDataSource<UserData>;
+  displayedColumns: string[] = ['id', 'full_name', 'email', 'telephone', 'verify', 'reject'];
+  //dataSource: MatTableDataSource<UserData>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor() {
-    // Create 100 users
-    const users = Array.from({ length: 100 }, (_, k) => createNewUser(k + 1));
+  verifyApplicationsForm!: FormGroup;
+  studentApplicationList: VerifyStudentApplication[] = [];
+  dataSource: MatTableDataSource<VerifyStudentApplication> = new MatTableDataSource<VerifyStudentApplication>([]);
+
+  studentDetails!: VerifyStudentApplication;
+
+  courseList: Course[] = [];
+  noStudents: string = '';
+  noStu: boolean = false;
+
+  constructor(private fb: FormBuilder, private studentService: StudentService, private courseService: CourseService, public dialog: MatDialog) {
+    // // Create 100 users
+    // const users = Array.from({ length: 100 }, (_, k) => createNewUser(k + 1));
 
     // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(users);
+    //this.dataSource = new MatTableDataSource(users);
   }
 
   ngOnInit(): void {
+
+    this.loadCourseBySmsAccountId();
+
+    this.verifyApplicationsForm = this.fb.group({
+      courseId: new FormControl(''),
+      branchId: new FormControl(''),
+    });
+  }
+
+
+  openDialog(studentApplication: VerifyStudentApplication) {
+    console.log(studentApplication)
+    const dialogRef = this.dialog.open(ViewStudentApplicationComponent, {
+      width: '1000px',
+      data: { callback: this.callBack.bind(this), defaultValue: studentApplication }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      this.loadNewStudents();
+    });
+  }
+
+  callBack(studentApplication: VerifyStudentApplication) {
+    this.studentDetails = studentApplication;
   }
 
   ngAfterViewInit() {
@@ -95,60 +136,36 @@ export class VerifyApplicationComponent implements OnInit {
     }
   }
 
+  loadNewStudents() {
+    if (this.verifyApplicationsForm.value) {
+      this.studentService.getNewStudentsByCourseAndBranchId(this.verifyApplicationsForm.controls['courseId'].value, this.verifyApplicationsForm.controls['branchId'].value).subscribe(data => {
+        console.log(data), (error: any) => console.log(error)
+        if (data) {
+          this.studentApplicationList = data;
+          this.dataSource = new MatTableDataSource(this.studentApplicationList);
+        } else {
+          this.noStudents = "No students found!";
+          this.noStu = true;
+          console.log("error while students details loading!");
+        }
+      })
+    } else {
+      console.log("Please select course and branch!");
+    }
+  }
+
+  loadCourseBySmsAccountId() {
+    this.courseService.getCoursesBySmsAccountId(sessionStorage.getItem("smsAccountId")).subscribe(data => {
+      console.log(data), (error: any) => console.log(error)
+      if (data) {
+        this.courseList = data;
+      }
+    })
+  }
 
 
-  pokemonControl = new FormControl('');
-  toppings = new FormControl('');
-  toppingList: string[] = ['Colombo', 'Horana', 'Panadura', 'Kalutara', 'Kandy', 'Galle'];
-  pokemonGroups: PokemonGroup[] = [
-    {
-      name: 'Bachelors',
-      pokemon: [
-        { value: 'bulbasaur-0', viewValue: 'Bulbasaur' },
-        { value: 'oddish-1', viewValue: 'Oddish' },
-        { value: 'bellsprout-2', viewValue: 'Bellsprout' },
-      ],
-    },
-    {
-      name: 'Masters',
-      pokemon: [
-        { value: 'squirtle-3', viewValue: 'Squirtle' },
-        { value: 'psyduck-4', viewValue: 'Psyduck' },
-        { value: 'horsea-5', viewValue: 'Horsea' },
-      ],
-    },
-    {
-      name: 'Doctoral',
-      disabled: true,
-      pokemon: [
-        { value: 'charmander-6', viewValue: 'Charmander' },
-        { value: 'vulpix-7', viewValue: 'Vulpix' },
-        { value: 'flareon-8', viewValue: 'Flareon' },
-      ],
-    },
-    {
-      name: 'Diploma',
-      pokemon: [
-        { value: 'mew-9', viewValue: 'Mew' },
-        { value: 'mewtwo-10', viewValue: 'Mewtwo' },
-      ],
-    },
-  ];
-
-}
-
-/** Builds and returns a new User. */
-function createNewUser(id: number): UserData {
-  const name =
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))] +
-    ' ' +
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) +
-    '.';
-
-  return {
-    id: id.toString(),
-    name: name,
-    progress: Math.round(Math.random() * 100).toString(),
-    fruit: FRUITS[Math.round(Math.random() * (FRUITS.length - 1))],
-  };
+  branchList = [
+    { id: 1, branchName: 'Colombo' },
+    { id: 2, branchName: 'Horana' }
+  ]
 }

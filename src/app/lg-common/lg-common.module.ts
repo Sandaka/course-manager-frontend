@@ -28,6 +28,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { ChartsModule } from 'ng2-charts';
 import { MatRadioModule } from '@angular/material/radio';
 import { StudentSelfRegistrationComponent } from './student-self-registration/student-self-registration.component';
+import { StudentRegistrationPaymentComponent } from './student-registration-payment/student-registration-payment.component';
 
 
 
@@ -35,7 +36,8 @@ import { StudentSelfRegistrationComponent } from './student-self-registration/st
 @NgModule({
   declarations: [
     SchoolRegistrationComponent,
-    StudentSelfRegistrationComponent
+    StudentSelfRegistrationComponent,
+    StudentRegistrationPaymentComponent
   ],
   imports: [
     CommonModule,

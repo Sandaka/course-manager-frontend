@@ -1,0 +1,130 @@
+.login-context-right {
+    height: 100vh;
+    width: 100%;
+    display: block;
+    //overflow: hidden;
+    right: 0;
+    margin-left: 2%;
+    //margin-top: 2%;
+}
+
+.login-context-left {
+    /* Smartphones (portrait and landscape) ----------- */
+    @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+        /* Styles */
+        background-color: #049179;
+        height: 100vh;
+        max-height: auto;
+    }
+
+    /* Smartphones (landscape) ----------- */
+    @media only screen and (min-width: 321px) {
+        /* Styles */
+        background-color: #049179;
+        height: 3vh;
+    }
+
+    /* Smartphones (portrait) ----------- */
+    @media only screen and (max-width: 320px) {
+        /* Styles */
+        background-color: #049179;
+        height: 3vh;
+    }
+
+    /* iPads (portrait and landscape) ----------- */
+    @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+        /* Styles */
+        background-color: #049179;
+        height: 3vh;
+    }
+
+    /* iPads (landscape) ----------- */
+    @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+        /* Styles */
+        background-color: #049179;
+        height: 100vh;
+        max-height: auto;
+    }
+
+    /* iPads (portrait) ----------- */
+    @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+        /* Styles */
+        background-color: #049179;
+        height: 100vh;
+        max-height: auto;
+    }
+
+    /* Desktops and laptops ----------- */
+    @media only screen and (min-width: 1224px) {
+        /* Styles */
+        background-color: #049179;
+        height: 100vh;
+        max-height: auto;
+    }
+
+    /* Large screens ----------- */
+    @media only screen and (min-width: 1824px) {
+        /* Styles */
+        background-color: #049179;
+        height: 100vh;
+        max-height: auto;
+    }
+
+    /* iPhone 4 ----------- */
+    // @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+    //     /* Styles */
+    //     background-color: #049179;
+    //     height: 100vh;
+    // }
+}
+
+.mat-form-field {
+    margin-top: 16px;
+    width: 100%;
+}
+
+table {
+    width: 100%;
+}
+td {
+    color: #515151;
+    font-size: smaller;
+    text-align: center;
+}
+
+button {
+    margin-top: 25px;
+}
+.search-btn {
+    background-color: #049179;
+}
+// hr{
+//     background-color: #03f598;
+// }
+
+.fee-table {
+    th {
+        font-size: smaller;
+        border: 1px solid rgb(220, 220, 220);
+        text-align: center;
+        background-color: #fadfbb;
+    }
+    td {
+        border: 1px solid rgb(220, 220, 220);
+    }
+}
+
+.example-radio-group {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
+    align-items: flex-start;
+}
+
+.example-radio-button {
+    margin: 5px;
+}
+
+#example-radio-group-label{
+    text-transform: uppercase; color: rgb(78, 77, 77); letter-spacing: 1px; font-size: smaller;
+}

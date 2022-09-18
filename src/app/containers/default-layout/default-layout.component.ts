@@ -17,12 +17,20 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
 
-  privilege: string = "CPAB"
+  privilege: any;//"CPAB"
 
   constructor(private observer: BreakpointObserver, private router: Router) { }
 
   ngOnInit(): void {
-    //this.privilege = "" // get from session
+    if(window.sessionStorage.getItem('packageCode') === null){
+      this.router.navigate(["/learngenix/signIn"])
+    }else{
+      let p = window.sessionStorage.getItem('packageCode');
+      this.privilege = p;
+      //this.privilege = JSON.parse(window.sessionStorage.getItem('packageCode') || '');
+      //console.log(p);
+    }
+    console.log(this.privilege);
   }
 
   ngAfterViewInit() {

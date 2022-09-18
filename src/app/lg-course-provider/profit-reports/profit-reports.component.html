@@ -1,0 +1,47 @@
+<mat-card>
+    <mat-card-title>
+        <mat-icon>bar_chart</mat-icon>Profit Reports
+    </mat-card-title>
+
+    <mat-card-content>
+        <div class="row">
+            <div class="col-md-6">
+                <mat-card-subtitle>Monthly Profit</mat-card-subtitle>
+                <div class="chart-wrapper">
+                    <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+                        [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType"
+                        [colors]="lineChartColors">
+                    </canvas>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <mat-card-subtitle>Progress of Last 3 Years</mat-card-subtitle>
+                <div class="chart-wrapper">
+                    <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
+                        [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card><br>
+
+<mat-card>
+    <mat-card-title>
+        <mat-icon>bar_chart</mat-icon>Your Expenses
+    </mat-card-title>
+
+    <mat-card-content>
+        <div class="row">
+            <div class="col-md-6">
+                <mat-card-subtitle>Monthly Expenses</mat-card-subtitle>
+                <div class="chart-wrapper">
+                    <canvas baseChart [datasets]="exp_barChartData" [labels]="barChartLabels"
+                        [options]="barChartOptions" [plugins]="barChartPlugins" [legend]="barChartLegend"
+                        [chartType]="barChartType" [colors]="exp_lineChartColors">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

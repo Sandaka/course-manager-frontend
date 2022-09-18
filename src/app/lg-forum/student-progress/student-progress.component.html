@@ -1,0 +1,45 @@
+<mat-card>
+    <mat-card-title>
+        <mat-icon>trending_up</mat-icon>Student Performance
+    </mat-card-title>
+
+    <mat-card-content>
+        <div class="row">
+            <div class="col-md-6">
+                <mat-card-subtitle>Monthly Earned Scores</mat-card-subtitle>
+                <div class="chart-wrapper">
+                    <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+                        [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"
+                        [plugins]="lineChartPlugins">
+                    </canvas>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <mat-card class="example-card">
+                    <mat-card-title>
+                        <h2>Scoring Criteria</h2>
+                    </mat-card-title>
+                    <mat-card-subtitle>How you getting points to your profile.</mat-card-subtitle>
+                    <mat-card-content>
+                        <mat-icon style="color: green;">star</mat-icon> You will earn 2 points for asking a quetion.<br>
+                        <mat-icon style="color: green;">star</mat-icon> You will earn 1 point to a vote for question.<br>
+                        <mat-icon style="color: green;">star</mat-icon> You will earn 2 points to a vote for answer.<br>
+                        <mat-icon style="color: green;">star</mat-icon> You will earn 5 points if exam/course work has
+                        more than 75 marks.<br>
+
+                        <hr>
+                        <h2>Badges</h2>
+
+                        <mat-icon style="color: brown;">verified_user</mat-icon> If you earned 25+ points, you're eligible to get bronze badge.<br>
+                        <mat-icon style="color: silver;">verified_user</mat-icon> If you earned 50+ points, you're eligible to get silver badge.<br>
+                        <mat-icon style="color: goldenrod;">verified_user</mat-icon> If you earned 75+ points, you're eligible to get gold badge.<br>
+                    </mat-card-content>
+                    <!-- <mat-card-actions>
+                      <button mat-button>LIKE</button>
+                      <button mat-button>SHARE</button>
+                    </mat-card-actions> -->
+                </mat-card>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

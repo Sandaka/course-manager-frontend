@@ -19,4 +19,6 @@ export class CreateCourseDetails {
     offerDescription: string = '';
     subjectList: SubjectDetail[] = [];
     courseYearsList: CourseYearsDetail[] = [];
+
+    smsAccountId: any;
 }

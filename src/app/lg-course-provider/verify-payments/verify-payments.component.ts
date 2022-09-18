@@ -1,8 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Course } from 'src/app/models/course';
+import { VerifyStudentApplication } from 'src/app/models/verify-student-application';
+import { CourseService } from 'src/app/services/course.service';
+import { StudentService } from 'src/app/services/student.service';
 
 
 interface Pokemon {
@@ -10,52 +15,19 @@ interface Pokemon {
   viewValue: string;
 }
 
-interface PokemonGroup {
-  disabled?: boolean;
-  name: string;
-  pokemon: Pokemon[];
-}
+// interface Course {
+//   disabled?: boolean;
+//   name: string;
+//   pokemon: Pokemon[];
+// }
 
 
 export interface UserData {
   id: string;
-  name: string;
-  progress: string;
-  fruit: string;
+  full_name: string;
+  email: string;
+  telephone: string;
 }
-
-/** Constants used to fill up our data base. */
-const FRUITS: string[] = [
-  'blueberry',
-  'lychee',
-  'kiwi',
-  'mango',
-  'peach',
-  'lime',
-  'pomegranate',
-  'pineapple',
-];
-const NAMES: string[] = [
-  'Maia',
-  'Asher',
-  'Olivia',
-  'Atticus',
-  'Amelia',
-  'Jack',
-  'Charlotte',
-  'Theodore',
-  'Isla',
-  'Oliver',
-  'Isabella',
-  'Jasper',
-  'Cora',
-  'Levi',
-  'Violet',
-  'Arthur',
-  'Mia',
-  'Thomas',
-  'Elizabeth',
-];
 
 @Component({
   selector: 'app-verify-payments',
@@ -64,21 +36,33 @@ const NAMES: string[] = [
 })
 export class VerifyPaymentsComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'name', 'progress', 'fruit'];
-  dataSource: MatTableDataSource<UserData>;
+  displayedColumns: string[] = ['id', 'full_name', 'email', 'telephone', 'amount', 'status', 'date', 'verify', 'reject'];
+  //dataSource: MatTableDataSource<UserData>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor() {
-    // Create 100 users
-    const users = Array.from({ length: 100 }, (_, k) => createNewUser(k + 1));
+  verifyApplicationsForm!: FormGroup;
+  studentApplicationList: VerifyStudentApplication[] = [];
+  dataSource: MatTableDataSource<VerifyStudentApplication> = new MatTableDataSource<VerifyStudentApplication>([]);
+  offerName: string = '';
+  offerId: any;
 
-    // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(users);
+  courseList: Course[] = [];
+
+  constructor(private fb: FormBuilder, private studentService: StudentService, private _snackBar: MatSnackBar, private courseService: CourseService) {
+
   }
 
   ngOnInit(): void {
+    this.loadCourseBySmsAccountId();
+
+    this.verifyApplicationsForm = this.fb.group({
+      courseId: new FormControl(''),
+      branchId: new FormControl(''),
+      offerId: new FormControl(''),
+      batchId: new FormControl(''),
+    });
   }
 
   ngAfterViewInit() {
@@ -95,60 +79,124 @@ export class VerifyPaymentsComponent implements OnInit {
     }
   }
 
+  loadNewStudents() {
+    if (this.verifyApplicationsForm.value) {
+      this.studentService.getPaidStudentsByCourseAndBranchId(this.verifyApplicationsForm.controls['courseId'].value, this.verifyApplicationsForm.controls['branchId'].value).subscribe(data => {
+        console.log(data), (error: any) => console.log(error)
+        if (data) {
+          this.studentApplicationList = data;
+          this.offerName = this.studentApplicationList[0].offerName;
+          this.offerId = this.studentApplicationList[0].courseOfferId;
+          this.dataSource = new MatTableDataSource(this.studentApplicationList);
+
+          this.verifyApplicationsForm.patchValue({
+            offerId: this.offerId
+          })
+        } else {
+          console.log("error while students details loading!");
+        }
+      })
+    } else {
+      console.log("Please select course and branch!");
+    }
+  }
+
+  verifyPayment(verifyStudentApplication: VerifyStudentApplication) {
+    console.log("Course id: " + verifyStudentApplication.courseId);
+    verifyStudentApplication.batchId = this.verifyApplicationsForm.controls['batchId'].value;
+    verifyStudentApplication.courseOfferId = this.verifyApplicationsForm.controls['offerId'].value;
+    verifyStudentApplication.branchId = this.verifyApplicationsForm.controls['branchId'].value;
+    verifyStudentApplication.username = window.sessionStorage.getItem('username');
+    verifyStudentApplication.smsAccountId = window.sessionStorage.getItem('smsAccountId');
+
+    this.studentService.verifyAndEnrollStudent(verifyStudentApplication).subscribe(data => {
+      console.log(data), (error: any) => console.log(error)
+      if (data) {
+        this.showSuccessSnackbar("Student verification submitted successfully!", 'close', '4000')
+        this.loadNewStudents();
+      } else {
+        this.showErrorSnackbar("Something went wrong!", 'close', '4000');
+      }
+      
+    })
+    this.showSuccessSnackbar("Student verification submitted successfully!", 'close', '4000')
+    this.loadNewStudents();
+  }
+
+  loadCourseBySmsAccountId() {
+    this.courseService.getCoursesBySmsAccountId(sessionStorage.getItem("smsAccountId")).subscribe(data => {
+      console.log(data), (error: any) => console.log(error)
+      if (data) {
+        this.courseList = data;
+      }
+    })
+  }
+
+  branchList = [
+    { id: 1, branchName: 'Colombo' },
+    { id: 2, branchName: 'Horana' }
+  ]
+  batchList = [
+    { id: 1, batchName: 'BIT2023C1' },
+    { id: 1, batchName: 'BIT2023C2' }
+  ]
+  // courseList: Course[] = [
+  //   {
+  //     name: 'Bachelors',
+  //     pokemon: [
+  //       { value: '1', viewValue: 'Bachelor in IT' },
+  //       { value: '2', viewValue: 'BSc in Software Engineering' },
+  //       { value: '3', viewValue: 'BSc in Business Management' },
+  //     ],
+  //   },
+  //   {
+  //     name: 'Masters',
+  //     pokemon: [
+  //       { value: '4', viewValue: 'MSc in IT' },
+  //       { value: '5', viewValue: 'MSc in Software Engineering' },
+  //       { value: '6', viewValue: 'MSc in Business Management' },
+  //     ],
+  //   },
+  //   {
+  //     name: 'Doctoral',
+  //     disabled: true,
+  //     pokemon: [
+  //       { value: 'charmander-6', viewValue: 'IT' },
+  //       { value: 'vulpix-7', viewValue: 'Business' },
+  //       { value: 'flareon-8', viewValue: 'Arts' },
+  //     ],
+  //   },
+  //   {
+  //     name: 'Diploma',
+  //     pokemon: [
+  //       { value: 'mew-9', viewValue: 'Computing' },
+  //       { value: 'mewtwo-10', viewValue: 'English' },
+  //     ],
+  //   },
+  // ];
 
 
-  pokemonControl = new FormControl('');
-  toppings = new FormControl('');
-  toppingList: string[] = ['Colombo', 'Horana', 'Panadura', 'Kalutara', 'Kandy', 'Galle'];
-  pokemonGroups: PokemonGroup[] = [
-    {
-      name: 'Bachelors',
-      pokemon: [
-        { value: 'bulbasaur-0', viewValue: 'Bulbasaur' },
-        { value: 'oddish-1', viewValue: 'Oddish' },
-        { value: 'bellsprout-2', viewValue: 'Bellsprout' },
-      ],
-    },
-    {
-      name: 'Masters',
-      pokemon: [
-        { value: 'squirtle-3', viewValue: 'Squirtle' },
-        { value: 'psyduck-4', viewValue: 'Psyduck' },
-        { value: 'horsea-5', viewValue: 'Horsea' },
-      ],
-    },
-    {
-      name: 'Doctoral',
-      disabled: true,
-      pokemon: [
-        { value: 'charmander-6', viewValue: 'Charmander' },
-        { value: 'vulpix-7', viewValue: 'Vulpix' },
-        { value: 'flareon-8', viewValue: 'Flareon' },
-      ],
-    },
-    {
-      name: 'Diploma',
-      pokemon: [
-        { value: 'mew-9', viewValue: 'Mew' },
-        { value: 'mewtwo-10', viewValue: 'Mewtwo' },
-      ],
-    },
-  ];
+  showSuccessSnackbar(content: any, action: any, duration: any) {
+    let sb = this._snackBar.open(content, action, {
+      duration: duration,
+      verticalPosition: "bottom", // Allowed values are  'top' | 'bottom'
+      horizontalPosition: "end", // Allowed values are 'start' | 'center' | 'end' | 'left' | 'right'
+      panelClass: ["success-style"]
+    });
+    sb.onAction().subscribe(() => {
+      sb.dismiss();
+    });
+  }
 
-}
-
-/** Builds and returns a new User. */
-function createNewUser(id: number): UserData {
-  const name =
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))] +
-    ' ' +
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) +
-    '.';
-
-  return {
-    id: id.toString(),
-    name: name,
-    progress: Math.round(Math.random() * 100).toString(),
-    fruit: FRUITS[Math.round(Math.random() * (FRUITS.length - 1))],
-  };
+  showErrorSnackbar(content: any, action: any, duration: any) {
+    let sb = this._snackBar.open(content, action, {
+      duration: duration,
+      verticalPosition: "bottom", // Allowed values are  'top' | 'bottom'
+      horizontalPosition: "end", // Allowed values are 'start' | 'center' | 'end' | 'left' | 'right'
+      panelClass: ["error-style"]
+    });
+    sb.onAction().subscribe(() => {
+      sb.dismiss();
+    });
+  }
 }

@@ -19,13 +19,13 @@
                                             <mat-label>Course</mat-label>
                                             <mat-select formControlName="courseId">
                                                 <mat-option>-- None --</mat-option>
-                                                <mat-optgroup *ngFor="let group of courseList" [label]="group.name"
-                                                    [disabled]="group.disabled">
-                                                    <mat-option *ngFor="let pokemon of group.pokemon"
-                                                        [value]="pokemon.value">
-                                                        {{pokemon.viewValue}}
+                                                <!-- <mat-optgroup *ngFor="let group of courseList" [label]="group.name"
+                                                    [disabled]="group.disabled"> -->
+                                                    <mat-option *ngFor="let course of courseList"
+                                                        [value]="course.id">
+                                                        {{course.title}}
                                                     </mat-option>
-                                                </mat-optgroup>
+                                                <!-- </mat-optgroup> -->
                                             </mat-select>
                                         </mat-form-field>
                                     </div>
@@ -438,12 +438,11 @@
                                                                 id="{{ 'qualificationTypeId' + eduIndex }}"
                                                                 formControlName="qualificationTypeId"
                                                                 aria-label="select educational level">
-                                                                <mat-option value="1">Phd</mat-option>
+                                                                <mat-option value="1">Bachelors</mat-option>
                                                                 <mat-option value="2">Masters</mat-option>
-                                                                <mat-option value="3">Bachelors</mat-option>
-                                                                <mat-option value="4">Diploma</mat-option>
-                                                                <mat-option value="5">Certification</mat-option>
-                                                                <mat-option value="6">Primary</mat-option>
+                                                                <mat-option value="3">Diploma</mat-option>
+                                                                <mat-option value="4">Certification</mat-option>
+                                                                <mat-option value="5">Primary</mat-option>
                                                             </mat-select>
                                                         </mat-form-field>
                                                     </div>

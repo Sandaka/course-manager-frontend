@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute } from '@angular/router';
+import { Course } from 'src/app/models/course';
 import { CourseFeeDto } from 'src/app/models/course-fee';
 import { CourseYearFeeDto } from 'src/app/models/course-year-fee';
 import { CourseYearFeeList } from 'src/app/models/course-year-fee-list';
@@ -15,11 +17,11 @@ interface Pokemon {
   viewValue: string;
 }
 
-interface Course {
-  disabled?: boolean;
-  name: string;
-  pokemon: Pokemon[];
-}
+// interface Course {
+//   disabled?: boolean;
+//   name: string;
+//   pokemon: Pokemon[];
+// }
 
 // export interface PeriodicElement {
 //   course_name: string;
@@ -74,12 +76,17 @@ export class StudentSelfRegistrationComponent implements OnInit {
   //paymentModes: string[] = ['Full time', 'Part time'];
 
   tempStudentDetailsForm!: FormGroup;
+  courseProviderId: string = '';
+  courseList: Course[] = [];
 
-  constructor(private fb: FormBuilder, private studentService: StudentService, private courseService: CourseService, private _snackBar: MatSnackBar) {
+  constructor(private activatedRoute: ActivatedRoute, private fb: FormBuilder, private studentService: StudentService, private courseService: CourseService, private _snackBar: MatSnackBar) {
     // this.processData();
   }
 
   ngOnInit(): void {
+
+    this.loadCourseByCourseProvider();
+
     this.tempStudentDetailsForm = this.fb.group({
       //firstName: new FormControl('', Validators.required),
       //lastName: new FormControl('', Validators.required),
@@ -114,6 +121,8 @@ export class StudentSelfRegistrationComponent implements OnInit {
 
     this.addEducation();
     // this.addQualification();
+
+    
   }
 
   get educationalQualificationList(): FormArray {
@@ -155,6 +164,7 @@ export class StudentSelfRegistrationComponent implements OnInit {
     this.educationalQualificationList.removeAt(eduIndex);
   }
 
+
   // removeQualification(pqIndex: number) {
   //   this.professionalQualificationList.removeAt(pqIndex);
   // }
@@ -165,40 +175,40 @@ export class StudentSelfRegistrationComponent implements OnInit {
     { id: 1, branchName: 'Colombo' },
     { id: 2, branchName: 'Horana' }
   ]
-  courseList: Course[] = [
-    {
-      name: 'Bachelors',
-      pokemon: [
-        { value: '1', viewValue: 'Bachelor in IT' },
-        { value: '2', viewValue: 'BSc in Software Engineering' },
-        { value: '3', viewValue: 'BSc in Business Management' },
-      ],
-    },
-    {
-      name: 'Masters',
-      pokemon: [
-        { value: '4', viewValue: 'MSc in IT' },
-        { value: '5', viewValue: 'MSc in Software Engineering' },
-        { value: '6', viewValue: 'MSc in Business Management' },
-      ],
-    },
-    {
-      name: 'Doctoral',
-      disabled: true,
-      pokemon: [
-        { value: 'charmander-6', viewValue: 'IT' },
-        { value: 'vulpix-7', viewValue: 'Business' },
-        { value: 'flareon-8', viewValue: 'Arts' },
-      ],
-    },
-    {
-      name: 'Diploma',
-      pokemon: [
-        { value: 'mew-9', viewValue: 'Computing' },
-        { value: 'mewtwo-10', viewValue: 'English' },
-      ],
-    },
-  ];
+  // courseList: Course[] = [
+  //   {
+  //     name: 'Bachelors',
+  //     pokemon: [
+  //       { value: '1', viewValue: 'Bachelor in IT' },
+  //       { value: '2', viewValue: 'BSc in Software Engineering' },
+  //       { value: '3', viewValue: 'BSc in Business Management' },
+  //     ],
+  //   },
+  //   {
+  //     name: 'Masters',
+  //     pokemon: [
+  //       { value: '4', viewValue: 'MSc in IT' },
+  //       { value: '5', viewValue: 'MSc in Software Engineering' },
+  //       { value: '6', viewValue: 'MSc in Business Management' },
+  //     ],
+  //   },
+  //   {
+  //     name: 'Doctoral',
+  //     disabled: true,
+  //     pokemon: [
+  //       { value: 'charmander-6', viewValue: 'IT' },
+  //       { value: 'vulpix-7', viewValue: 'Business' },
+  //       { value: 'flareon-8', viewValue: 'Arts' },
+  //     ],
+  //   },
+  //   {
+  //     name: 'Diploma',
+  //     pokemon: [
+  //       { value: 'mew-9', viewValue: 'Computing' },
+  //       { value: 'mewtwo-10', viewValue: 'English' },
+  //     ],
+  //   },
+  // ];
 
   // private processData() {
   //   const statesSeen: any = {};
@@ -242,6 +252,24 @@ export class StudentSelfRegistrationComponent implements OnInit {
 
         this.dataSource_course = new MatTableDataSource(courseYearFeeList.courseDetailsList);
         this.dataSource_fee = new MatTableDataSource(courseYearFeeList.courseFeeList);
+      })
+    }
+  }
+
+  loadCourseByCourseProvider() {
+    console.log("aaaaa")
+    this.activatedRoute.params.subscribe(data => {
+      this.courseProviderId = data.id
+      
+    })
+    console.log("Course provider " + this.courseProviderId);
+
+    if (this.courseProviderId) {
+      this.courseService.getCoursesByCpId(this.courseProviderId).subscribe(data => {
+        console.log(data), (error: any) => console.log(error)
+        if (data) {
+          this.courseList = data;
+        }
       })
     }
   }

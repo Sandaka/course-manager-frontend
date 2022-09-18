@@ -1,7 +1,8 @@
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Charge } from 'src/app/models/charge';
 import { CourseProviderService } from 'src/app/services/course-provider.service';
 
 @Component({
@@ -20,12 +21,17 @@ export class SchoolRegistrationComponent implements OnInit {
   paymentHandler: any = null;
   courseProviderDetailsForm!: FormGroup;
 
+  // generatedToken: any;
+  // paymentEmail: any;
+  // paidAmount: any;
+
   // firstFormGroup = this._formBuilder.group({
   //   firstCtrl: ['', Validators.required],
   // });
   // secondFormGroup = this._formBuilder.group({
   //   firstCtrl: ['', Validators.required],
   // });
+
 
   constructor(private formBuilder: FormBuilder, private courseProviderServie: CourseProviderService, private _snackBar: MatSnackBar) { }
 
@@ -46,21 +52,25 @@ export class SchoolRegistrationComponent implements OnInit {
       schoolWebsite: new FormControl(''),
       description: new FormControl(''),
       packageId: new FormControl(''),
-      amount: new FormControl('')
+      amount: new FormControl(''),
+      generatedToken: new FormControl(''),
+      paymentEmail: new FormControl(''),
+      paidAmount: new FormControl(''),
+      // cvc: new FormControl(''),
+      // expYear: new FormControl(''),
+      // expMonth: new FormControl(''),
+      // cardNumber: new FormControl(''),
     });
 
-    //this.invokeStripe(); // use when enable stripe
+    this.invokeStripe(); // use when enable stripe
   }
 
-  makePayment(amount: number, pkgId: number) {
+  saveCourseProvider(amount: number, pkgId: number) {
     this.courseProviderDetailsForm.patchValue({
       packageId: pkgId,
       amount: amount
     })
     console.log(this.courseProviderDetailsForm.value)
-    // this.courseProviderServie.testMethod().subscribe(data=>{
-    //   console.log(data)
-    // })
     this.courseProviderServie.registerCourseProvider(this.courseProviderDetailsForm.value).subscribe(data => {
       console.log(data), (error: any) => console.log(error)
       if (data) {
@@ -71,7 +81,26 @@ export class SchoolRegistrationComponent implements OnInit {
     })
   }
 
-  makePaymentStripe(amount: number, pkgId: number) {
+  // makePaymentAndSave() {
+  //   console.log(this.courseProviderDetailsForm.value);
+
+  //   (<any>window).Stripe.card.createToken({
+  //     number: this.courseProviderDetailsForm.controls['cardNumber'],
+  //     exp_month: this.courseProviderDetailsForm.controls['expMonth'],
+  //     exp_year: this.courseProviderDetailsForm.controls['expYear'],
+  //     cvc: this.courseProviderDetailsForm.controls['cvc'],
+  //   }, (status: number, response: any) => {
+  //     if (status === 200) {
+  //       let token = response.id;
+  //       console.log(token)
+  //       //this.chargeCard(token);
+  //     } else {
+  //       console.log(response.error.message);
+  //     }
+  //   });
+  // }
+
+  makePayment(amount: any, pkgId: number) {
     const paymentHandler = (<any>window).StripeCheckout.configure({
       key: 'pk_test_51LMOp0G8pqgiypVSenTgZVEygHf0CuM3OO0I8VhU9PxMfVx5mk3AtlkXSdAT1Neh9lYivdRChKV6V2JEKiC45QlE00k1HAQvOz',
       locale: 'auto',
@@ -79,14 +108,55 @@ export class SchoolRegistrationComponent implements OnInit {
         console.log(stripeToken)
         console.log("PAYMENT DETAILS::: " + "PKG: " + pkgId + " Amount: " + amount + " Transaction Id: " + stripeToken.id)
         //alert('Stripe token generated!');
+        // sessionStorage.setItem('stripeToken', stripeToken.id);
+        // sessionStorage.setItem('stripeEmail', stripeToken.email);
+        // sessionStorage.setItem('stripeAmount', amount);
+
+        //this.chargeCard(this.paymentEmail, this.generatedToken, this.paidAmount);
+        paymentstripe(stripeToken)
       }
+
     });
+
+    const paymentstripe = (stripeToken: any) => {
+      this.courseProviderServie.createCharge(new Charge("sandaka94@gmail.com", stripeToken.id, amount)).subscribe((data: any) => {
+        console.log(data);
+        
+        if (data.data === "success") {
+          // this.success = true
+          console.log("success")
+        }
+        else {
+          // this.failure = true
+        }
+      });
+
+      this.saveCourseProvider(amount, pkgId);
+    };
+
+
+    // console.log(this.generatedToken)
+    // if (sessionStorage.getItem('stripeToken') && sessionStorage.getItem('stripeEmail') && sessionStorage.getItem('stripeAmount')) {
+    //   this.generatedToken = sessionStorage.getItem('stripeToken');
+    //   this.paymentEmail = sessionStorage.getItem('stripeEmail');
+    //   this.paidAmount = sessionStorage.getItem('stripeAmount');
+    //   this.chargeCard(this.paymentEmail, this.generatedToken, this.paidAmount);
+    // }
 
     paymentHandler.open({
       name: 'LearnGenix',
-      description: '3 widgets',
+      description: 'Your Trusted Education Partner!',
+      image:'/assets/lgx-logo2.png', 
       amount: amount * 100
     });
+
+
+  }
+
+  chargeCard(token: any, email: string, amount: any) {
+    this.courseProviderServie.createCharge(new Charge(token, email, amount)).subscribe(data => {
+      console.log(data)
+    })
   }
 
   invokeStripe() {
@@ -102,6 +172,9 @@ export class SchoolRegistrationComponent implements OnInit {
           token: function (stripeToken: any) {
             console.log(stripeToken)
             alert('Payment has been successfull!');
+            this.generatedToken = stripeToken.id;
+            this.paymentEmail = stripeToken.email;
+            //this.paidAmount = amount;
           }
         });
       }
@@ -133,4 +206,5 @@ export class SchoolRegistrationComponent implements OnInit {
       sb.dismiss();
     });
   }
+
 }

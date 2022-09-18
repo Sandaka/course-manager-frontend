@@ -6,6 +6,58 @@
           <mat-icon>question_answer</mat-icon>
           Recent Questions
         </ng-template>
+
+        <!-- load dynamically -->
+        <mat-card class="example-card" *ngFor="let post of postsList">
+          <mat-card-header>
+            <div mat-card-avatar class="example-header-image"></div>
+            <mat-card-title>{{post.title}}</mat-card-title>
+            <mat-card-subtitle>{{post.fullName}} | Asked: {{post.postDate}} </mat-card-subtitle>
+          </mat-card-header>
+          <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+
+          <div class="row">
+            <div class="col-md-1 col-sm-1 col-xs-1">
+              <div class="voting">
+                <span class="material-icons arrow-icon">arrow_drop_up</span>
+                <!-- <span class="fa fa-caret-up"></span> -->
+                <span>{{post.views}}</span>
+                <span class="material-icons arrow-icon">arrow_drop_down</span>
+              </div>
+            </div>
+            <div class="col-md-11 col-sm-11 col-xs-11">
+              <mat-card-content>
+                <p>
+                  {{post.body}}
+                </p>
+                <span class="badge badge-info" *ngFor="let tag of post.tagNames">{{tag}}</span>
+                <hr>
+                <div class="row">
+                  <div class="col-md-9">
+                    <button mat-raised-button class="question-btns">
+                      <mat-icon>question_answer</mat-icon> 3 Answers
+                    </button>
+                    <button mat-raised-button class="question-btns">
+                      <mat-icon>remove_red_eye</mat-icon> 1k Views
+                    </button>
+                  </div>
+                  <div class="col-md-1">
+                    <button mat-raised-button class="answer-btns" color="primary">
+                      <mat-icon>speaker_notes</mat-icon> Answer
+                    </button>
+                  </div>
+                </div>
+              </mat-card-content>
+            </div>
+          </div>
+
+          <!-- <mat-card-actions>
+    <button mat-button>LIKE</button>
+    <button mat-button>SHARE</button>
+  </mat-card-actions> -->
+        </mat-card>
+
+
         <mat-card class="example-card">
           <mat-card-header>
             <div mat-card-avatar class="example-header-image"></div>
@@ -26,9 +78,9 @@
             <div class="col-md-11 col-sm-11 col-xs-11">
               <mat-card-content>
                 <p>
-                  The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-                  A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-                  bred for hunting.
+                  I'm trying to get all the records from 'Messages' table but the problem is 'roles' are saving as an
+                  array in dynamo DB
+                  and I need to get all records which having the "INSTRUCTOR" role of each record.
                 </p>
                 <span class="badge badge-info">Java</span>
                 <span class="badge badge-info">Spring boot</span>
@@ -61,7 +113,7 @@
         <mat-card class="example-card">
           <mat-card-header>
             <div mat-card-avatar class="example-header-image"></div>
-            <mat-card-title>Can you please explain OOP concepts using Java?</mat-card-title>
+            <mat-card-title>How to find empty array values in DynamoDB GSI</mat-card-title>
             <mat-card-subtitle>Sandaka Wijesinghe | Asked: 16-06-2022 </mat-card-subtitle>
           </mat-card-header>
           <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
@@ -78,12 +130,13 @@
             <div class="col-md-11 col-sm-11 col-xs-11">
               <mat-card-content>
                 <p>
-                  The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-                  A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-                  bred for hunting.
+                  I'm trying to get all the records from 'Messages' table but the problem is 'roles' are saving as an
+                  array in dynamo DB
+                  and I need to get all records which having the "INSTRUCTOR" role of each record.
                 </p>
                 <span class="badge badge-info">Java</span>
-                <span class="badge badge-info">Spring boot</span>
+                <span class="badge badge-info">AWS</span>
+                <span class="badge badge-info">Dyanamo DB</span>
                 <hr>
                 <div class="row">
                   <div class="col-md-9">
@@ -113,7 +166,7 @@
         <mat-card class="example-card">
           <mat-card-header>
             <div mat-card-avatar class="example-header-image"></div>
-            <mat-card-title>Can you please explain OOP concepts using Java?</mat-card-title>
+            <mat-card-title>Can we define list type attribute as the hash key in GSI</mat-card-title>
             <mat-card-subtitle>Sandaka Wijesinghe | Asked: 16-06-2022 </mat-card-subtitle>
           </mat-card-header>
           <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
@@ -130,12 +183,14 @@
             <div class="col-md-11 col-sm-11 col-xs-11">
               <mat-card-content>
                 <p>
-                  The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-                  A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-                  bred for hunting.
+                  I have implemented a Global Secondary Index to retrieve all the records from DynamoDB using the given
+                  parameters. According to the implementation,
+                  I was able to get all the records that are related to the INSTRUCTOR role.
+                  But there are some records without having any role. Then I need to get all the records including the
+                  INSTRUCTOR role and empty role details.
                 </p>
                 <span class="badge badge-info">Java</span>
-                <span class="badge badge-info">Spring boot</span>
+                <span class="badge badge-info">AWS</span>
                 <hr>
                 <div class="row">
                   <div class="col-md-9">
@@ -183,7 +238,8 @@
   </div>
   <div class="col-md-3">
     <mat-card class="example-card">
-      <button mat-raised-button style="background-color: rgb(10, 137, 172); color: white; width: 100%" color="primary">
+      <button mat-raised-button style="background-color: rgb(10, 137, 172); color: white; width: 100%" color="primary"
+        (click)="openDialog()">
         <!-- <mat-icon>hand</mat-icon>  -->
         Ask a Question
       </button>

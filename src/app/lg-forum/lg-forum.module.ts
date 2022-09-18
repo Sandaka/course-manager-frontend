@@ -29,12 +29,17 @@ import { ChartsModule } from 'ng2-charts';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatBadgeModule } from '@angular/material/badge';
-
+import { MatDialogModule } from '@angular/material/dialog';
+import { AskQuestionFormComponent } from './ask-question-form/ask-question-form.component';
+import {MatChipsModule} from '@angular/material/chips';
+import { StudentProgressComponent } from './student-progress/student-progress.component';
 
 
 @NgModule({
   declarations: [
-    StudentForumComponent
+    StudentForumComponent,
+    AskQuestionFormComponent,
+    StudentProgressComponent
   ],
   imports: [
     CommonModule,
@@ -68,7 +73,9 @@ import { MatBadgeModule } from '@angular/material/badge';
     MatTabsModule,
     MatDividerModule,
     MatAutocompleteModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatDialogModule,
+    MatChipsModule
   ]
 })
 export class LgForumModule { }

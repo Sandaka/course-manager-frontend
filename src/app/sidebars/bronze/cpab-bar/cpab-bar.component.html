@@ -7,13 +7,14 @@
 
     <mat-divider></mat-divider>
 
-    <button mat-button class="menu-button" routerLink="/cpadmin/">
+    <button mat-button class="menu-button" routerLink="/cpadmin/" matTooltip="Info about the action"
+        matTooltipClass="example-tooltip-red">
         <mat-icon>book</mat-icon>
         <span>Home</span>
     </button>
     <button mat-button class="menu-button" routerLink="/cpadmin/cp_verify_application">
         <mat-icon>person</mat-icon>
-        <span>Registrations</span>
+        <span>Applications</span>
     </button>
     <button mat-button class="menu-button" routerLink="/cpadmin/cp_verify_payment">
         <mat-icon>supervised_user_circle</mat-icon>
@@ -31,9 +32,13 @@
         <mat-icon>vpn_key</mat-icon>
         <span>User Access</span>
     </button>
-    <button mat-button class="menu-button" routerLink="/cpadmin">
-        <mat-icon>vpn_key</mat-icon>
-        <span>Reports</span>
+    <button mat-button class="menu-button" routerLink="/cpadmin/profit_reports">
+        <mat-icon>attach_money</mat-icon>
+        <span>Profits</span>
+    </button>
+    <button mat-button class="menu-button" routerLink="/cpadmin/student_progress">
+        <mat-icon>show_chart</mat-icon>
+        <span>Student Progress</span>
     </button>
 
     <mat-divider></mat-divider>

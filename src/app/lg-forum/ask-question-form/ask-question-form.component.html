@@ -1,0 +1,94 @@
+<h2 mat-dialog-title>
+    <mat-icon>forum</mat-icon>&nbsp; Ask Your Question
+</h2>
+<hr>
+<mat-dialog-content class="mat-typography">
+
+    <form [formGroup]="askQuestionForm" novalidate>
+        <mat-form-field appearance="fill">
+            <mat-label>Title</mat-label>
+            <input matInput formControlName="title">
+        </mat-form-field>
+
+        <div class="editControls">
+            <div class='btn-group'>
+                <button mat-raised-button type="button" class="btn" (click)="setStyle('bold')">
+                    <b>B</b>
+                </button>
+                <button mat-raised-button type="button" class="btn" (click)="setStyle('italic')">
+                    <em><b>I</b></em>
+                </button>
+                <button mat-raised-button type="button" class="btn" (click)="setStyle('underline')">
+                    <u><b>U</b></u>
+                </button>
+                <button mat-raised-button type="button" class="btn" (click)="setStyle('strikeThrough')">
+                    <s>abc</s>
+                </button>
+            </div>
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <div class='btn-group'>
+                <button mat-raised-button type="button" class="btn" (click)="setStyle('justifyLeft')">
+                    <mat-icon> format_align_left</mat-icon>
+                    <!-- <i class='icon-align-left'></i> -->
+                </button>
+                <button mat-raised-button type="button" class="btn" (click)="setStyle('justifyCenter')">
+                    <!-- <i class='icon-align-center'></i> -->
+                    <mat-icon> format_align_center</mat-icon>
+                </button>
+                <button mat-raised-button type="button" class="btn" (click)="setStyle('justifyRight')">
+                    <!-- <i class='icon-align-right'></i> -->
+                    <mat-icon> format_align_right</mat-icon>
+                </button>
+                <button mat-raised-button type="button" class="btn" (click)="setStyle('justifyFull')">
+                    <!-- <i class='icon-align-justify'></i> -->
+                    <mat-icon> format_align_justify</mat-icon>
+                </button>
+            </div>
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <div class='btn-group'>
+                <button mat-raised-button type="button" class="btn" (click)="setStyle('indent')">
+                    <!-- <i class='icon-indent-right'></i> -->
+                    <mat-icon> format_indent_decrease</mat-icon>
+                </button>
+                <button mat-raised-button type="button" class="btn" (click)="setStyle('outdent')">
+                    <!-- <i class='icon-indent-left'></i> -->
+                    <mat-icon> format_indent_increase</mat-icon>
+                </button>
+            </div>
+        </div>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="body"></textarea>
+        </mat-form-field>
+
+        <mat-form-field class="example-chip-list" appearance="fill">
+            <mat-label>Favorite Tags</mat-label>
+            <mat-chip-list #chipList aria-label="tag selection">
+                <mat-chip *ngFor="let tag of tags" (removed)="remove(tag)">
+                    {{tag}}
+                    <button matChipRemove>
+                        <mat-icon>cancel</mat-icon>
+                    </button>
+                </mat-chip>
+                <input placeholder="New tag..." #tagInput  [matAutocomplete]="auto"
+                    [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    (matChipInputTokenEnd)="add($event)">
+            </mat-chip-list>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+                    {{tag}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </form>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close (click)="reloadPostsOnForum()">Cancel</button>
+    <!-- <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button> -->
+    <button class="post-btn" mat-raised-button color="primary" (click)="postQuestion()">
+        <mat-icon>publish</mat-icon> Post
+    </button>
+</mat-dialog-actions>
+<pre>{{askQuestionForm.value | json}}</pre>

@@ -16,22 +16,31 @@
                         </div>
                     </div>
                     <br>
-                    <form class="form-group">
+                    <form class="form-group" [formGroup]="loginForm">
 
                         <mat-form-field>
                             <mat-icon matPrefix>person_outline</mat-icon>
-                            <input autofocus type="text" matInput placeholder="Username *" [(ngModel)]="username"
+                            <input autofocus type="text" matInput placeholder="Username *" formControlName="username"
                                 name="username">
+                            <mat-error
+                                *ngIf="loginForm.controls['username'].errors && loginForm.controls['username'].hasError('required')">
+                                Please enter username
+                            </mat-error>
                         </mat-form-field>
 
                         <mat-form-field>
                             <mat-icon matPrefix>lock_outline</mat-icon>
                             <input type="password" name="password" autocomplete="false" matInput
-                                placeholder="Password *" [(ngModel)]="password">
+                                placeholder="Password *" formControlName="password">
+                            <mat-error
+                                *ngIf="loginForm.controls['password'].errors && loginForm.controls['password'].hasError('required')">
+                                Please enter username
+                            </mat-error>
                         </mat-form-field>
-
+                        <p style="color: red;font-size:smaller" *ngIf="loginErrorMsg !==''">{{loginErrorMsg}}</p>
                         <div>
-                            <button mat-raised-button class="submit-btn" (click)="systemLogin()">Login</button>
+                            <button mat-raised-button class="submit-btn" [disabled]="!loginForm.valid"
+                                (click)="systemLogin(loginForm.value)">Login</button>
                         </div>
                     </form>
                 </mat-card-content>

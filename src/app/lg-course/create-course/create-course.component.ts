@@ -16,13 +16,15 @@ export interface SubjectDetail {
 
 const ELEMENT_DATA: SubjectDetail[] = [
   { name: 'Applied Data Programming', id: 1, instructor: 'Prof. Lochandaka', instructorId: 1 },
-  { name: 'Software Architecture and Programming Models', id: 2, instructor: 'Prof. Prasad', instructorId: 2 },
-  { name: 'Software Quality Engineering', id: 3, instructor: 'Mr. Darshana Abhayakoon', instructorId: 3 },
-  { name: 'Agile Project Development', id: 4, instructor: 'Mrs. Ramani Jayasekara', instructorId: 4 },
-  { name: 'Applied Data Programming', id: 1, instructor: 'Prof. Lochandaka', instructorId: 1 },
-  { name: 'Software Architecture and Programming Models', id: 2, instructor: 'Prof. Prasad', instructorId: 2 },
-  { name: 'Software Quality Engineering', id: 3, instructor: 'Mr. Darshana Abhayakoon', instructorId: 3 },
-  { name: 'Agile Project Development', id: 4, instructor: 'Mrs. Ramani Jayasekara', instructorId: 4 },
+  { name: 'Agile PM', id: 2, instructor: 'Prof. Prasad', instructorId: 2 },
+  { name: 'Software quality engineering', id: 3, instructor: 'Mr. Darshana Abhayakoon', instructorId: 3 },
+  { name: 'Software architecture and progamming models', id: 4, instructor: 'Mrs. Ramani Jayasekara', instructorId: 4 },
+  { name: 'Advanced Mathematics', id: 5, instructor: 'Prof. Lochandaka', instructorId: 1 },
+  { name: 'Web application development', id: 6, instructor: 'Prof. Prasad', instructorId: 2 },
+  { name: 'Networking Part 1', id: 7, instructor: 'Mr. Darshana Abhayakoon', instructorId: 3 },
+  { name: 'Networking part 2', id: 8, instructor: 'Mrs. Ramani Jayasekara', instructorId: 4 },
+  { name: 'UI UX development', id: 9, instructor: 'Mr. Darshana Abhayakoon', instructorId: 3 },
+  { name: 'Advanced java programming', id: 10, instructor: 'Mrs. Ramani Jayasekara', instructorId: 4 },
 
 ];
 
@@ -137,6 +139,8 @@ export class CreateCourseComponent implements OnInit {
 
   saveCourse(courseDetails: CreateCourseDetails) {
     console.log(courseDetails)
+    courseDetails.smsAccountId = sessionStorage.getItem("smsAccountId");
+    console.log(courseDetails.smsAccountId)
     this.courseService.saveCourse(courseDetails).subscribe(data => {
       console.log(data), (error: any) => console.log(error)
       if (data) {

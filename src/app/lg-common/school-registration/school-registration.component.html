@@ -214,14 +214,68 @@
                                     <div class="plan-select"><a (click)="makePayment(99, 3)">Select Plan</a></div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <!-- <div class="row">
                                 <button mat-raised-button matStepperPrevious>Back</button><span style="color: white;"> |
                                 </span>
                                 <button mat-raised-button (click)="stepper.reset()">Reset</button>
+                            </div> -->
+                            <div>
+                                <button mat-raised-button matStepperPrevious>Back</button><span style="color: white;"> |
+                                </span>
+                                <!-- <button mat-raised-button matStepperNext>Next</button> -->
+                            </div>
+
+                        </mat-step>
+
+                        <!-- <mat-step>
+                            <ng-template matStepLabel>Payment</ng-template>
+                            <div class="row snip1214">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Card numbr</mat-label>
+                                    <input matInput placeholder="Last name, First name"
+                                        formControlName="cardNumber">
+                                </mat-form-field>
+
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Exp</mat-label>
+                                    <input matInput placeholder="Last name, First name"
+                                        formControlName="expMonth">
+                                </mat-form-field>
+
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Exp year</mat-label>
+                                    <input matInput placeholder="Last name, First name"
+                                        formControlName="expYear">
+                                </mat-form-field>
+
+                                <mat-form-field appearance="fill">
+                                    <mat-label>CVC</mat-label>
+                                    <input matInput placeholder="Last name, First name"
+                                        formControlName="cvc">
+                                </mat-form-field>
+
+                                <mat-form-field appearance="fill">
+                                    <mat-label>paymentEmail</mat-label>
+                                    <input matInput placeholder="Last name, First name"
+                                        formControlName="paymentEmail">
+                                </mat-form-field>
+
+
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Amount</mat-label>
+                                    <input matInput placeholder="Last name, First name"
+                                        formControlName="paidAmount">
+                                </mat-form-field>
+                                
+                            </div>
+                            <div class="row">
+                                <button mat-raised-button matStepperPrevious>Back</button><span style="color: white;"> |
+                                </span>
+                                <button mat-raised-button (click)="makePaymentAndSave()">Reset</button>
                             </div>
 
 
-                        </mat-step>
+                        </mat-step> -->
                     </mat-stepper>
                 </mat-card>
             </form>

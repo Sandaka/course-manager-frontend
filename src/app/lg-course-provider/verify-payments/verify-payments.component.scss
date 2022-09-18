@@ -10,3 +10,53 @@ td,
 th {
     width: 25%;
 }
+
+.search-btn {
+    background-color: #049179;
+}
+
+.verify-btn {
+    background-color: #04915b;
+    font-weight: 100;
+}
+
+.reject-btn {
+    background-color: #be510d;
+    font-weight: 100;
+    margin-left: 10px;
+}
+
+.mat-column-id {
+    flex: 0 0 7% !important;
+    width: 7% !important;
+}
+
+.mat-column-full_name {
+    flex: 0 0 20% !important;
+    width: 20% !important;
+}
+
+.mat-column-email {
+    flex: 0 0 20% !important;
+    width: 20% !important;
+}
+
+.mat-column-telephone {
+    flex: 0 0 10% !important;
+    width: 10% !important;
+}
+
+.mat-column-amount {
+    flex: 0 0 10% !important;
+    width: 10% !important;
+}
+
+.mat-column-status {
+    flex: 0 0 10% !important;
+    width: 10% !important;
+}
+
+.mat-column-date {
+    flex: 0 0 20% !important;
+    width: 20% !important;
+}

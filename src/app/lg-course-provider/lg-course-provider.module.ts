@@ -25,9 +25,14 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import { MatExpansionModule } from '@angular/material/expansion';
+import {MatBadgeModule} from '@angular/material/badge';
 import { ChartsModule } from 'ng2-charts';
 import { VerifyApplicationComponent } from './verify-application/verify-application.component';
 import { VerifyPaymentsComponent } from './verify-payments/verify-payments.component';
+import { ViewStudentApplicationComponent } from './view-student-application/view-student-application.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { ProfitReportsComponent } from './profit-reports/profit-reports.component';
+
 
 
 
@@ -35,7 +40,9 @@ import { VerifyPaymentsComponent } from './verify-payments/verify-payments.compo
   declarations: [
     CourseProviderDashboardComponent,
     VerifyApplicationComponent,
-    VerifyPaymentsComponent
+    VerifyPaymentsComponent,
+    ViewStudentApplicationComponent,
+    ProfitReportsComponent
   ],
   imports: [
     CommonModule,
@@ -63,7 +70,9 @@ import { VerifyPaymentsComponent } from './verify-payments/verify-payments.compo
     MatProgressBarModule,
     MatTooltipModule,
     MatStepperModule,
-    ChartsModule
+    ChartsModule,
+    MatBadgeModule,
+    MatDialogModule
   ]
 })
 export class LgCourseProviderModule { }

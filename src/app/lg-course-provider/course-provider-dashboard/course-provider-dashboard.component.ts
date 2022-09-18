@@ -8,20 +8,20 @@ import { MatTableDataSource } from '@angular/material/table';
 export interface UserData {
   id: string;
   name: string;
-  progress: string;
+  startDate: string;
   fruit: string;
 }
 
 /** Constants used to fill up our data base. */
 const FRUITS: string[] = [
-  'blueberry',
-  'lychee',
-  'kiwi',
-  'mango',
-  'peach',
-  'lime',
-  'pomegranate',
-  'pineapple',
+  '12-12-2024',
+  '10-12-2025',
+  '12-10-2024',
+  '12-10-2022',
+  '30-09-2024',
+  '08-10-2024',
+  '11-12-2024',
+  '15-12-2025',
 ];
 const NAMES: string[] = [
   'Maia',
@@ -52,14 +52,14 @@ const NAMES: string[] = [
 })
 export class CourseProviderDashboardComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['id', 'name', 'progress', 'fruit'];
+  displayedColumns: string[] = ['id', 'name', 'startDate', 'fruit'];
   dataSource: MatTableDataSource<UserData>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  public doughnutChartLabels: string[] = ['US1', 'UK1', 'EU1', 'SI1'];
-  public doughnutChartData: number[] = [26, 50, 50];
+  public doughnutChartLabels: string[] = ['MSc in SE', 'Diploma in IT', 'BSc in BM', 'Certification'];
+  public doughnutChartData: number[] = [26, 50, 50,70];
   chartOptions = {
     responsive: false,
     
@@ -104,7 +104,8 @@ function createNewUser(id: number): UserData {
   return {
     id: id.toString(),
     name: name,
-    progress: Math.round(Math.random() * 100).toString(),
+    startDate: '01-01-2019',
+    // startDate: Math.round(Math.random() * 100).toString(),
     fruit: FRUITS[Math.round(Math.random() * (FRUITS.length - 1))],
   };
 

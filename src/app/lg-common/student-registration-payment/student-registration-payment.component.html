@@ -1,0 +1,51 @@
+<div>
+    <div class="row">
+        <div class="col-md-1 col-sm-0 login-context-left"></div>
+        <div class="col-md-10 col-sm-12 col-xs-12 login-context-right" *ngIf="tempStudentCourseDetail"><br>
+            <mat-card>
+                <mat-card-title>Hello, {{tempStudentCourseDetail.fullName}}</mat-card-title>
+                <mat-card-subtitle>Your application has been approved! Please make the initial payment to proceed the
+                    registration process.
+                </mat-card-subtitle>
+            </mat-card><br>
+            <mat-card class="example-card" style="border-left: solid 5px rgb(0, 191, 255);">
+                <mat-card-header>
+                    <div mat-card-avatar>
+                        <mat-icon>school</mat-icon>
+                    </div>
+                    <mat-card-title>{{tempStudentCourseDetail.title}}</mat-card-title>
+                    <mat-card-subtitle>{{tempStudentCourseDetail.schoolName}}</mat-card-subtitle>
+                </mat-card-header>
+                <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+                    alt="Photo of a Shiba Inu"> -->
+                <mat-card-content>
+                    <p>
+                        {{tempStudentCourseDetail.description}}
+                    </p>
+
+                    <h5><b>Reference: </b> {{tempStudentCourseDetail.tempStuId}} </h5>
+                    <h5><b>Start Date: </b> {{tempStudentCourseDetail.startDate}} </h5>
+                    <h5><b>End Date: </b> {{tempStudentCourseDetail.endDate}} </h5>
+                    <h5><b>Duration: </b> {{tempStudentCourseDetail.years}} </h5>
+                    <h5><b>Medium: </b> {{tempStudentCourseDetail.medium}}</h5>
+                    <h5><b>Total Couse Fee: </b> {{tempStudentCourseDetail.courseFee}} </h5>
+                    <h4 *ngIf="tempStudentCourseDetail.paymentStatus===0"><b>Payment Status: </b>
+                        <span class="badge badge-warning">Pending</span>
+                    </h4>
+                    <h4 *ngIf="tempStudentCourseDetail.paymentStatus===1"><b>Payment Status: </b>
+                        <span class="badge badge-success">Completed</span>
+                    </h4>
+                    <hr>
+                    <h5><b>Please pay your first installment {{tempStudentCourseDetail.cost}} </b> before the date
+                        given. </h5>
+                </mat-card-content>
+                <mat-card-actions>
+                    <!-- <button mat-button>LIKE</button> -->
+                    &nbsp; <button mat-raised-button color="primary" class="search-btn" (click)="makePayment()">
+                        <mat-icon>payment</mat-icon> Pay {{tempStudentCourseDetail.cost}}
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+</div>
